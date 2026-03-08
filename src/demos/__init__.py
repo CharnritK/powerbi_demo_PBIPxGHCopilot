@@ -1,0 +1,2 @@
+"""CLI demo entry points."""
+

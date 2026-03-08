@@ -1,0 +1,50 @@
+table dim_region
+	lineageTag: 87d964e5-9feb-442d-b1c8-8275f3e948e1
+
+	column RegionKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 35e307b3-6820-43ba-882c-d932a5e74326
+		summarizeBy: none
+		sourceColumn: RegionKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: 229362b0-b167-479d-bc58-d37eaba757bd
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: 25cec96c-86be-4be6-8ba9-fbcf0d1cd0c2
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column Manager
+		dataType: string
+		lineageTag: 470c5524-4891-4975-a932-af32fd5d348b
+		summarizeBy: none
+		sourceColumn: Manager
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_region = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Point\2026\Speaker\PBIPxCopilot\powerbi_demo_PBIPxGHCopilot\data\dim_region.csv"),[Delimiter=",", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"RegionKey", Int64.Type}, {"Region", type text}, {"Country", type text}, {"Manager", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,9 @@
+UserPrincipalName,Region
+north.manager@contoso-demo.com,North
+central.manager@contoso-demo.com,Central
+east.manager@contoso-demo.com,East
+south.manager@contoso-demo.com,South
+vp.sales@contoso-demo.com,North
+vp.sales@contoso-demo.com,Central
+vp.sales@contoso-demo.com,East
+vp.sales@contoso-demo.com,South

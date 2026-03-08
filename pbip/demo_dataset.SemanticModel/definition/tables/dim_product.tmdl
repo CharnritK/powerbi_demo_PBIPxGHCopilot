@@ -1,0 +1,60 @@
+table dim_product
+	lineageTag: 45893fed-af01-4fe5-b934-572ca396e78f
+
+	column ProductKey
+		dataType: int64
+		formatString: 0
+		lineageTag: c2b3ab9d-49e1-472b-a7e5-2e0a15c2225d
+		summarizeBy: none
+		sourceColumn: ProductKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product
+		dataType: string
+		lineageTag: 4a3db87c-3323-4dcb-825e-3103f4033e81
+		summarizeBy: none
+		sourceColumn: Product
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: 7363c75a-472f-4721-b565-b4beab3d5830
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitPrice
+		dataType: int64
+		formatString: 0
+		lineageTag: 78ac8036-ac90-4583-9962-f26c769f012a
+		summarizeBy: none
+		sourceColumn: UnitPrice
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitCost
+		dataType: int64
+		formatString: 0
+		lineageTag: 91e9d2e9-10f3-4080-b6d6-c668414148ba
+		summarizeBy: none
+		sourceColumn: UnitCost
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_product = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Point\2026\Speaker\PBIPxCopilot\powerbi_demo_PBIPxGHCopilot\data\dim_product.csv"),[Delimiter=",", Columns=5, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ProductKey", Int64.Type}, {"Product", type text}, {"Category", type text}, {"UnitPrice", Int64.Type}, {"UnitCost", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

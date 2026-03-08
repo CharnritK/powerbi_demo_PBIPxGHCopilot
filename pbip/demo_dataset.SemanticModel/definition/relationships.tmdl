@@ -1,0 +1,20 @@
+relationship AutoDetected_b995dfb4-bd0f-4a4d-9a8a-1441b6a9afce
+	fromColumn: fact_sales.ChannelKey
+	toColumn: dim_channel.ChannelKey
+
+relationship AutoDetected_a40dc5e5-ace3-4fd0-8768-2a1de5fa5892
+	fromColumn: fact_sales.RegionKey
+	toColumn: dim_region.RegionKey
+
+relationship AutoDetected_983eb9ea-dd38-48fa-a187-23fc8f6cb080
+	fromColumn: security_region_access.Region
+	toColumn: dim_region.Region
+
+relationship AutoDetected_ffb5684e-46ad-4a2d-8b33-971fee286a0a
+	fromColumn: fact_sales.ProductKey
+	toColumn: dim_product.ProductKey
+
+relationship AutoDetected_ea988fae-6356-4582-8c14-322735abd6f6
+	fromColumn: fact_sales.DateKey
+	toColumn: dim_date.DateKey
+

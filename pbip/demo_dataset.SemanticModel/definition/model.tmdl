@@ -10,14 +10,14 @@ annotation __PBI_TimeIntelligenceEnabled = 0
 
 annotation PBI_QueryOrder = ["dim_channel","dim_date","dim_product","dim_region","fact_sales","security_region_access"]
 
-annotation PBI_ProTooling = ["DevMode"]
+annotation PBI_ProTooling = ["DevMode","MCP-PBIModeling"]
 
-ref table dim_channel
-ref table dim_region
-ref table dim_product
-ref table fact_sales
-ref table dim_date
-ref table security_region_access
+ref table 'Dim Channel'
+ref table 'Dim Region'
+ref table 'Dim Product'
+ref table 'Fact Sales'
+ref table 'Dim Date'
+ref table 'Security Region Access'
 
 ref cultureInfo en-US
 

@@ -1,8 +1,11 @@
-table dim_channel
+/// Sales channel dimension used to compare performance across distribution channels.
+table 'Dim Channel'
 	lineageTag: 2b08cec2-5182-4912-8e83-258bb3cb796a
 
-	column ChannelKey
+	/// Surrogate key for the sales channel dimension.
+	column 'Channel Key'
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 660bb063-e6af-4444-b672-abd818bb5e80
 		summarizeBy: none
@@ -10,6 +13,7 @@ table dim_channel
 
 		annotation SummarizationSetBy = Automatic
 
+	/// Sales channel name used for filtering and comparison.
 	column Channel
 		dataType: string
 		lineageTag: 0ddf4ea0-ddd8-4aa5-98d0-1361d40d08ab
@@ -22,7 +26,7 @@ table dim_channel
 		mode: import
 		source =
 				let
-				    Source = Csv.Document(File.Contents("C:\Point\2026\Speaker\PBIPxCopilot\powerbi_demo_PBIPxGHCopilot\data\dim_channel.csv"),[Delimiter=",", Columns=2, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    Source = Csv.Document(File.Contents(DataRootFolder & "\dim_channel.csv"),[Delimiter=",", Columns=2, Encoding=1252, QuoteStyle=QuoteStyle.None]),
 				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ChannelKey", Int64.Type}, {"Channel", type text}})
 				in

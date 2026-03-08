@@ -1,19 +1,23 @@
-# Power BI REST API Demo for Microsoft Fabric Trial
+# Power BI REST API and Local Modeling MCP Demo
 
-This repository is a small, notebook-first demo for showing how an existing Microsoft Entra app registration can call the Power BI REST API from a local machine.
+This repository combines two local Power BI demo tracks:
+
+- a notebook-first Power BI REST API demo for Microsoft Fabric Trial
+- a local Power BI Modeling MCP workflow against the `pbip/demo_dataset` semantic model
 
 The demo supports two authentication paths:
 
 - `Delegated user authentication` is the recommended demo path. It is simpler for presenters, works well in a Fabric Trial setup, and matches what non-admin users usually need.
 - `Service principal authentication` is included as an optional, admin-dependent path for automation-oriented scenarios.
 
-The goal is to make the following demo flow easy to run and easy to explain:
+The goal is to make the following demo flows easy to run and easy to explain:
 
 1. Sign in or acquire an app token
 2. List workspaces
 3. List datasets in a workspace
 4. List reports in a workspace
 5. Run a very small DAX query against a semantic model
+6. Open and modify a local PBIP semantic model through the Power BI Modeling MCP server
 
 ## Why delegated auth comes first
 
@@ -33,9 +37,18 @@ Service principal auth is still useful, but it depends on tenant admin settings,
 |-- README.md
 |-- requirements.txt
 |-- .env.example
+|-- data/
 |-- notebooks/
 |   |-- 01_delegated_auth_demo.ipynb
 |   `-- 02_service_principal_demo.ipynb
+|-- pbip/
+|   |-- demo_dataset.pbip
+|   |-- demo_dataset.Report/
+|   `-- demo_dataset.SemanticModel/
+|-- scripts/
+|   |-- demo_dataset_mcp_smoke_test.py
+|   |-- setup_powerbi_modeling_mcp.py
+|   `-- powerbi_modeling_mcp_common.py
 |-- src/
 |   |-- auth/
 |   |   |-- __init__.py
@@ -56,6 +69,7 @@ Service principal auth is still useful, but it depends on tenant admin settings,
 |       `-- logging_utils.py
 `-- docs/
     |-- auth_decision_guide.md
+    |-- pbip_sample_design.md
     |-- setup_checklist.md
     `-- troubleshooting.md
 ```
@@ -85,6 +99,36 @@ If you want an installed kernel for the virtual environment:
 ```powershell
 python -m ipykernel install --user --name powerbi-rest-demo --display-name "Python (powerbi-rest-demo)"
 ```
+
+## Power BI Modeling MCP Quick Start
+
+This repo already contains a local PBIP sample at `pbip/demo_dataset.pbip`.
+
+1. Register the installed Power BI Modeling MCP server with Codex.
+2. Use the PBIP definition folder as the MCP connection target.
+3. Run the smoke test to update the model, export it back to TMDL, reopen Power BI Desktop, refresh, and validate the result.
+
+```powershell
+python scripts\setup_powerbi_modeling_mcp.py
+python scripts\demo_dataset_mcp_smoke_test.py
+```
+
+Exact Copilot Chat / MCP connection prompt:
+
+```text
+Open semantic model from PBIP folder 'C:\Point\2026\Speaker\PBIPxCopilot\powerbi_demo_PBIPxGHCopilot\pbip\demo_dataset.SemanticModel\definition'
+```
+
+What the smoke test does:
+
+- ensures the `DataRootFolder` Power Query parameter exists
+- rewrites CSV partitions to use `DataRootFolder`
+- adds `[Total Sales]`, `[Total Cost]`, and `[Gross Margin]`
+- exports the semantic model back to the PBIP TMDL folder
+- reopens `pbip\demo_dataset.pbip` in Power BI Desktop
+- refreshes the imported tables and validates the expected totals
+
+If you clone the repo to a different folder later, update the `DataRootFolder` parameter value once instead of editing every table query.
 
 ## Environment Variables
 
@@ -165,6 +209,7 @@ Add your own screenshots later in these spots:
 
 - [docs/setup_checklist.md](/C:/Point/2026/Speaker/PBIPxCopilot/powerbi_demo_PBIPxGHCopilot/docs/setup_checklist.md)
 - [docs/auth_decision_guide.md](/C:/Point/2026/Speaker/PBIPxCopilot/powerbi_demo_PBIPxGHCopilot/docs/auth_decision_guide.md)
+- [docs/pbip_sample_design.md](/C:/Point/2026/Speaker/PBIPxCopilot/powerbi_demo_PBIPxGHCopilot/docs/pbip_sample_design.md)
 - [docs/troubleshooting.md](/C:/Point/2026/Speaker/PBIPxCopilot/powerbi_demo_PBIPxGHCopilot/docs/troubleshooting.md)
 
 ## Presenter Demo Script

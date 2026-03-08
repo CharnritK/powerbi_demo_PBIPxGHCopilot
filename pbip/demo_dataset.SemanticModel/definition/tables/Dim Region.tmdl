@@ -1,8 +1,11 @@
-table dim_region
+/// Geography dimension used for regional performance and manager coverage analysis.
+table 'Dim Region'
 	lineageTag: 87d964e5-9feb-442d-b1c8-8275f3e948e1
 
-	column RegionKey
+	/// Surrogate key for the region dimension.
+	column 'Region Key'
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 35e307b3-6820-43ba-882c-d932a5e74326
 		summarizeBy: none
@@ -10,6 +13,7 @@ table dim_region
 
 		annotation SummarizationSetBy = Automatic
 
+	/// Business region name.
 	column Region
 		dataType: string
 		lineageTag: 229362b0-b167-479d-bc58-d37eaba757bd
@@ -18,6 +22,7 @@ table dim_region
 
 		annotation SummarizationSetBy = Automatic
 
+	/// Country associated with the region.
 	column Country
 		dataType: string
 		lineageTag: 25cec96c-86be-4be6-8ba9-fbcf0d1cd0c2
@@ -26,6 +31,7 @@ table dim_region
 
 		annotation SummarizationSetBy = Automatic
 
+	/// Regional manager responsible for the region.
 	column Manager
 		dataType: string
 		lineageTag: 470c5524-4891-4975-a932-af32fd5d348b
@@ -38,7 +44,7 @@ table dim_region
 		mode: import
 		source =
 				let
-				    Source = Csv.Document(File.Contents("C:\Point\2026\Speaker\PBIPxCopilot\powerbi_demo_PBIPxGHCopilot\data\dim_region.csv"),[Delimiter=",", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    Source = Csv.Document(File.Contents(DataRootFolder & "\dim_region.csv"),[Delimiter=",", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),
 				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"RegionKey", Int64.Type}, {"Region", type text}, {"Country", type text}, {"Manager", type text}})
 				in

@@ -1,8 +1,12 @@
-table dim_date
+/// Calendar dimension used for filtering, grouping, and time-intelligence analysis.
+table 'Dim Date'
 	lineageTag: c3451eda-6565-4ff3-900e-e28b201bf025
+	dataCategory: Time
 
-	column DateKey
+	/// Surrogate key for the calendar date.
+	column 'Date Key'
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: f992ed40-2a32-4f54-997e-98484773443b
 		summarizeBy: none
@@ -10,8 +14,10 @@ table dim_date
 
 		annotation SummarizationSetBy = Automatic
 
+	/// Calendar date used for relationships and time intelligence.
 	column Date
 		dataType: dateTime
+		isUnique
 		formatString: Long Date
 		lineageTag: 7b039894-65d5-4e2d-ad30-1fcd0c579cc3
 		summarizeBy: none
@@ -21,6 +27,7 @@ table dim_date
 
 		annotation UnderlyingDateTimeDataType = Date
 
+	/// Calendar year number.
 	column Year
 		dataType: int64
 		formatString: 0
@@ -30,6 +37,7 @@ table dim_date
 
 		annotation SummarizationSetBy = Automatic
 
+	/// Calendar quarter label.
 	column Quarter
 		dataType: string
 		lineageTag: 7854bdb7-bb02-4ed4-8933-d5463ed9bd27
@@ -38,8 +46,10 @@ table dim_date
 
 		annotation SummarizationSetBy = Automatic
 
-	column MonthNumber
+	/// Month number within the calendar year.
+	column 'Month Number'
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: a844d68c-1c67-4bf2-84dc-1e1da65c1e26
 		summarizeBy: none
@@ -47,17 +57,20 @@ table dim_date
 
 		annotation SummarizationSetBy = Automatic
 
-	column MonthName
+	/// Month name used for slicers and labels.
+	column 'Month Name'
 		dataType: string
 		lineageTag: 69e27c28-86ba-4c3d-be92-bd405054083b
 		summarizeBy: none
 		sourceColumn: MonthName
+		sortByColumn: 'Month Number'
 
 		annotation SummarizationSetBy = Automatic
 
-	column YearMonth
+	/// Calendar month grain used for chronological trend analysis.
+	column 'Year Month'
 		dataType: dateTime
-		formatString: Long Date
+		formatString: MMM yyyy
 		lineageTag: ef03afce-b8cd-4a9c-a1db-b8b818bdc190
 		summarizeBy: none
 		sourceColumn: YearMonth
@@ -70,7 +83,7 @@ table dim_date
 		mode: import
 		source =
 				let
-				    Source = Csv.Document(File.Contents("C:\Point\2026\Speaker\PBIPxCopilot\powerbi_demo_PBIPxGHCopilot\data\dim_date.csv"),[Delimiter=",", Columns=7, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    Source = Csv.Document(File.Contents(DataRootFolder & "\dim_date.csv"),[Delimiter=",", Columns=7, Encoding=1252, QuoteStyle=QuoteStyle.None]),
 				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"DateKey", Int64.Type}, {"Date", type date}, {"Year", Int64.Type}, {"Quarter", type text}, {"MonthNumber", Int64.Type}, {"MonthName", type text}, {"YearMonth", type date}})
 				in

@@ -31,84 +31,84 @@ Optional extension:
 ## Tables and key columns
 
 ### Fact Sales
-- OrderID
-- DateKey
-- RegionKey
-- ProductKey
-- ChannelKey
+- Order ID
+- Date Key
+- Region Key
+- Product Key
+- Channel Key
 - Units
-- SalesAmount
-- CostAmount
+- Sales Amount
+- Cost Amount
 
 ### Dim Date
-- DateKey
+- Date Key
 - Date
 - Year
 - Quarter
-- MonthNumber
-- MonthName
-- YearMonth
+- Month Number
+- Month Name
+- Year Month
 
 ### Dim Region
-- RegionKey
+- Region Key
 - Region
 - Country
 - Manager
 
 ### Dim Product
-- ProductKey
+- Product Key
 - Product
 - Category
-- UnitPrice
-- UnitCost
+- Unit Price
+- Unit Cost
 
 ### Dim Channel
-- ChannelKey
+- Channel Key
 - Channel
 
 ### Security Region Access (optional)
-- UserPrincipalName
+- User Principal Name
 - Region
 
 ## Relationships
-- Fact Sales[DateKey] -> Dim Date[DateKey]
-- Fact Sales[RegionKey] -> Dim Region[RegionKey]
-- Fact Sales[ProductKey] -> Dim Product[ProductKey]
-- Fact Sales[ChannelKey] -> Dim Channel[ChannelKey]
+- Fact Sales[Date Key] -> Dim Date[Date Key]
+- Fact Sales[Region Key] -> Dim Region[Region Key]
+- Fact Sales[Product Key] -> Dim Product[Product Key]
+- Fact Sales[Channel Key] -> Dim Channel[Channel Key]
 
 Optional RLS pattern:
 - Security Region Access[Region] -> Dim Region[Region]
 
 ## Measures
-- Sales Amount = SUM(Fact Sales[SalesAmount])
-- Total Cost = SUM(Fact Sales[CostAmount])
-- Gross Margin = [Sales Amount] - [Total Cost]
-- Gross Margin % = DIVIDE([Gross Margin], [Sales Amount])
+- Total Sales = SUM(Fact Sales[Sales Amount])
+- Total Cost = SUM(Fact Sales[Cost Amount])
+- Gross Margin = [Total Sales] - [Total Cost]
+- Gross Margin % = DIVIDE([Gross Margin], [Total Sales])
 - Total Units = SUM(Fact Sales[Units])
-- Order Count = DISTINCTCOUNT(Fact Sales[OrderID])
-- Average Order Value = DIVIDE([Sales Amount], [Order Count])
+- Order Count = DISTINCTCOUNT(Fact Sales[Order ID])
+- Average Order Value = DIVIDE([Total Sales], [Order Count])
 
 ## Suggested report pages
 
 ### 1. Executive Overview
 Purpose: fast business story
 Visuals:
-- KPI cards: Sales Amount, Gross Margin, Gross Margin %, Order Count
-- clustered column chart: Sales Amount by Region
-- bar chart: Sales Amount by Product
+- KPI cards: Total Sales, Gross Margin, Gross Margin %, Order Count
+- clustered column chart: Total Sales by Region
+- bar chart: Total Sales by Product
 - slicers: Month, Channel
 
 ### 2. Regional Performance
 Purpose: region comparison and drill-down
 Visuals:
-- matrix: Region x Product with Sales Amount and Gross Margin
-- trend line: Sales Amount by YearMonth
+- matrix: Region x Product with Total Sales and Gross Margin
+- trend line: Total Sales by YearMonth
 - decomposition tree or simple bar chart by Channel
 
 ### 3. API Query Validation
 Purpose: connect report design to REST API behavior
 Visuals:
-- simple table showing Region and Sales Amount
+- simple table showing Region and Total Sales
 - text box explaining the matching DAX query used in the notebook
 - optional screenshot of the notebook output
 

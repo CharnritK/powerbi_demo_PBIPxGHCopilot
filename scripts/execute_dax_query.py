@@ -15,10 +15,10 @@ TOPN(
     10,
     SUMMARIZECOLUMNS(
         'Dim Region'[Region],
-        "Sales Amount", [Sales Amount],
+        "Total Sales", [Total Sales],
         "Gross Margin", [Gross Margin]
     ),
-    [Sales Amount], DESC
+    [Total Sales], DESC
 )"""
 
 

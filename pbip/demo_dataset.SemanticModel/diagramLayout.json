@@ -5,15 +5,28 @@
       "ordinal": 0,
       "scrollPosition": {
         "x": 0,
-        "y": 75.333335876464844
+        "y": 77.333335876464844
       },
       "nodes": [
+        {
+          "location": {
+            "x": 390.05869249671969,
+            "y": 329.23243858884189
+          },
+          "nodeIndex": "Fact Sales",
+          "nodeLineageTag": "8ed44def-41ac-4706-ac8c-ad64c60ebdce",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
         {
           "location": {
             "x": 762.63695385117546,
             "y": 376.09255905503642
           },
-          "nodeIndex": "dim_channel",
+          "nodeIndex": "Dim Channel",
           "nodeLineageTag": "2b08cec2-5182-4912-8e83-258bb3cb796a",
           "size": {
             "height": 128,
@@ -26,7 +39,7 @@
             "x": 50,
             "y": 83.758278256894414
           },
-          "nodeIndex": "dim_date",
+          "nodeIndex": "Dim Date",
           "nodeLineageTag": "c3451eda-6565-4ff3-900e-e28b201bf025",
           "size": {
             "height": 248,
@@ -39,7 +52,7 @@
             "x": 415.36127330143057,
             "y": -50
           },
-          "nodeIndex": "dim_product",
+          "nodeIndex": "Dim Product",
           "nodeLineageTag": "45893fed-af01-4fe5-b934-572ca396e78f",
           "size": {
             "height": 200,
@@ -52,7 +65,7 @@
             "x": 153.05436149861623,
             "y": 646.98820015742979
           },
-          "nodeIndex": "dim_region",
+          "nodeIndex": "Dim Region",
           "nodeLineageTag": "87d964e5-9feb-442d-b1c8-8275f3e948e1",
           "size": {
             "height": 176,
@@ -62,23 +75,10 @@
         },
         {
           "location": {
-            "x": 390.05869249671969,
-            "y": 329.23243858884189
-          },
-          "nodeIndex": "fact_sales",
-          "nodeLineageTag": "8ed44def-41ac-4706-ac8c-ad64c60ebdce",
-          "size": {
-            "height": 300,
-            "width": 234
-          },
-          "zIndex": 0
-        },
-        {
-          "location": {
             "x": 551.32025563870343,
             "y": 699.53882600156544
           },
-          "nodeIndex": "security_region_access",
+          "nodeIndex": "Security Region Access",
           "nodeLineageTag": "3d907769-d3eb-4ae0-a4e9-78dad13e879a",
           "size": {
             "height": 128,

@@ -1,7 +1,1 @@
-msal>=1.31.0
-requests>=2.32.0
-pandas>=2.2.0
-python-dotenv>=1.0.1
-ipykernel>=6.29.0
-notebook>=7.0.0
-
+-e .[notebooks]

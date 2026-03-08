@@ -68,6 +68,8 @@ After the manual setup is complete, copy `.env.example` to `.env` and fill in:
 - `DAX_QUERY`
 - `IMPERSONATED_USER_NAME` only if you have a valid use case
 
+Canonical docs and samples use these names. Legacy `PBI_*` aliases are still accepted by the older notebook and `scripts/` helpers, but they are no longer the primary documented path.
+
 ## Recommended Run Order
 
 1. Delegated notebook with device code flow

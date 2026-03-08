@@ -1,89 +1,53 @@
-# Power BI REST API and Local Modeling MCP Demo
+# Power BI REST API and PBIP Modeling Demo
 
-This repository combines two local Power BI demo tracks:
+This repo is tuned for a live speaker session. It combines:
 
-- a notebook-first Power BI REST API demo for Microsoft Fabric Trial
-- a local Power BI Modeling MCP workflow against the `pbip/demo_dataset` semantic model
+- a notebook-first Power BI REST API demo
+- a local PBIP semantic model for Power BI Modeling MCP demos
+- lightweight Python entrypoints that presenters can explain without extra setup noise
 
-The demo supports two authentication paths:
+The primary presentation path is delegated auth first, then an optional service principal comparison.
 
-- `Delegated user authentication` is the recommended demo path. It is simpler for presenters, works well in a Fabric Trial setup, and matches what non-admin users usually need.
-- `Service principal authentication` is included as an optional, admin-dependent path for automation-oriented scenarios.
+## Speaker Path
 
-The goal is to make the following demo flows easy to run and easy to explain:
+Start here for the lowest-friction live demo:
 
-1. Sign in or acquire an app token
-2. List workspaces
-3. List datasets in a workspace
-4. List reports in a workspace
-5. Run a very small DAX query against a semantic model
-6. Open and modify a local PBIP semantic model through the Power BI Modeling MCP server
+1. Read [`docs/setup_checklist.md`](docs/setup_checklist.md).
+2. Fill in a local `.env` from [`.env.example`](.env.example).
+3. Run [`notebooks/01_delegated_auth_demo.ipynb`](notebooks/01_delegated_auth_demo.ipynb).
+4. Use [`notebooks/02_service_principal_demo.ipynb`](notebooks/02_service_principal_demo.ipynb) only if you want to show the automation identity path.
+5. Use the PBIP sample under [`pbip/`](pbip/README.md) for the local semantic model segment.
 
-## Why delegated auth comes first
+Older all-in-one notebook and `scripts/` helpers are still present for workshop variations. They now read the same canonical `.env` values as the split notebook flow.
 
-For a simple Fabric Trial demo, delegated auth is usually the least fragile option:
-
-- no client secret is required
-- device code flow works even when a localhost redirect URI is not configured
-- the caller sees exactly what their signed-in user account can access
-- the permission story is easier to explain to a live audience
-
-Service principal auth is still useful, but it depends on tenant admin settings, workspace role assignment, and dataset limitations that often break a quick demo.
-
-## Repository Structure
+## Repo Layout
 
 ```text
 .
 |-- README.md
-|-- requirements.txt
 |-- .env.example
+|-- pyproject.toml
+|-- requirements.txt
+|-- requirements-dev.txt
+|-- config/
+|   `-- settings.example.json
 |-- data/
+|-- docs/
 |-- notebooks/
 |   |-- 01_delegated_auth_demo.ipynb
-|   `-- 02_service_principal_demo.ipynb
+|   |-- 02_service_principal_demo.ipynb
+|   `-- powerbi_rest_api_demo.ipynb
 |-- pbip/
+|   |-- README.md
 |   |-- demo_dataset.pbip
 |   |-- demo_dataset.Report/
 |   `-- demo_dataset.SemanticModel/
 |-- scripts/
-|   |-- demo_dataset_mcp_smoke_test.py
-|   |-- setup_powerbi_modeling_mcp.py
-|   `-- powerbi_modeling_mcp_common.py
 |-- src/
-|   |-- auth/
-|   |   |-- __init__.py
-|   |   |-- delegated_auth.py
-|   |   `-- service_principal_auth.py
-|   |-- clients/
-|   |   |-- __init__.py
-|   |   `-- powerbi_client.py
-|   |-- demos/
-|   |   |-- __init__.py
-|   |   |-- execute_dax_query.py
-|   |   |-- list_datasets.py
-|   |   |-- list_reports.py
-|   |   `-- list_workspaces.py
-|   `-- utils/
-|       |-- __init__.py
-|       |-- config.py
-|       `-- logging_utils.py
-`-- docs/
-    |-- auth_decision_guide.md
-    |-- pbip_sample_design.md
-    |-- setup_checklist.md
-    `-- troubleshooting.md
+`-- tests/
 ```
 
 ## Quick Start
-
-Estimated time: 5 to 10 minutes, plus any tenant admin tasks you still need to complete.
-
-1. Create and activate a virtual environment.
-2. Install Python dependencies.
-3. Copy `.env.example` to `.env`.
-4. Fill in your tenant, app, workspace, and dataset values.
-5. Complete the manual portal prerequisites in [docs/setup_checklist.md](/C:/Point/2026/Speaker/PBIPxCopilot/powerbi_demo_PBIPxGHCopilot/docs/setup_checklist.md).
-6. Start with the delegated notebook in [notebooks/01_delegated_auth_demo.ipynb](/C:/Point/2026/Speaker/PBIPxCopilot/powerbi_demo_PBIPxGHCopilot/notebooks/01_delegated_auth_demo.ipynb).
 
 ```powershell
 python -m venv .venv
@@ -94,45 +58,21 @@ Copy-Item .env.example .env
 python -m notebook notebooks\01_delegated_auth_demo.ipynb
 ```
 
-If you want an installed kernel for the virtual environment:
+If you want the development extras:
+
+```powershell
+pip install -r requirements-dev.txt
+```
+
+If you want a named notebook kernel:
 
 ```powershell
 python -m ipykernel install --user --name powerbi-rest-demo --display-name "Python (powerbi-rest-demo)"
 ```
 
-## Power BI Modeling MCP Quick Start
+## Configuration
 
-This repo already contains a local PBIP sample at `pbip/demo_dataset.pbip`.
-
-1. Register the installed Power BI Modeling MCP server with Codex.
-2. Use the PBIP definition folder as the MCP connection target.
-3. Run the smoke test to update the model, export it back to TMDL, reopen Power BI Desktop, refresh, and validate the result.
-
-```powershell
-python scripts\setup_powerbi_modeling_mcp.py
-python scripts\demo_dataset_mcp_smoke_test.py
-```
-
-Exact Copilot Chat / MCP connection prompt:
-
-```text
-Open semantic model from PBIP folder 'C:\Point\2026\Speaker\PBIPxCopilot\powerbi_demo_PBIPxGHCopilot\pbip\demo_dataset.SemanticModel\definition'
-```
-
-What the smoke test does:
-
-- ensures the `DataRootFolder` Power Query parameter exists
-- rewrites CSV partitions to use `DataRootFolder`
-- adds `[Total Sales]`, `[Total Cost]`, and `[Gross Margin]`
-- exports the semantic model back to the PBIP TMDL folder
-- reopens `pbip\demo_dataset.pbip` in Power BI Desktop
-- refreshes the imported tables and validates the expected totals
-
-If you clone the repo to a different folder later, update the `DataRootFolder` parameter value once instead of editing every table query.
-
-## Environment Variables
-
-Keep all values local in `.env`. Do not commit secrets.
+The canonical config contract is the root `.env` file. Use these names:
 
 ```dotenv
 TENANT_ID=
@@ -152,18 +92,19 @@ REQUEST_TIMEOUT_SECONDS=60
 
 Notes:
 
-- `CLIENT_SECRET` is only needed for the service principal notebook and scripts.
-- `REDIRECT_URI` is optional for the primary device code path.
-- `IMPERSONATED_USER_NAME` is optional and should only be used when the dataset and identity scenario support it.
+- `AUTH_MODE=delegated` is the recommended speaker default.
+- `CLIENT_SECRET` is only required for service principal demos.
+- `config/settings.example.json` is an optional local template for script-heavy workflows.
+- Legacy `PBI_*` variable names are still accepted for compatibility, but the docs and examples use the canonical names above.
 
-## Run the Demos
+## Run the Demo Flows
 
-Notebook-first path:
+Notebook-first:
 
-- [notebooks/01_delegated_auth_demo.ipynb](/C:/Point/2026/Speaker/PBIPxCopilot/powerbi_demo_PBIPxGHCopilot/notebooks/01_delegated_auth_demo.ipynb)
-- [notebooks/02_service_principal_demo.ipynb](/C:/Point/2026/Speaker/PBIPxCopilot/powerbi_demo_PBIPxGHCopilot/notebooks/02_service_principal_demo.ipynb)
+- [`notebooks/01_delegated_auth_demo.ipynb`](notebooks/01_delegated_auth_demo.ipynb)
+- [`notebooks/02_service_principal_demo.ipynb`](notebooks/02_service_principal_demo.ipynb)
 
-Script examples:
+Python CLI examples:
 
 ```powershell
 python -m src.demos.list_workspaces --auth-mode delegated
@@ -172,82 +113,61 @@ python -m src.demos.list_reports --group-id <workspace-id> --auth-mode delegated
 python -m src.demos.execute_dax_query --group-id <workspace-id> --dataset-id <dataset-id> --auth-mode delegated
 ```
 
-Optional service principal examples:
+Optional service principal comparison:
 
 ```powershell
 python -m src.demos.list_workspaces --auth-mode service_principal
 python -m src.demos.list_datasets --group-id <workspace-id> --auth-mode service_principal
 ```
 
-## Admin-Required Service Principal Warning
+## PBIP Modeling MCP
 
-Treat service principal auth as `admin-required / automation-oriented`.
+The repo already includes a local PBIP sample at `pbip/demo_dataset.pbip`.
 
-It depends on:
+```powershell
+python scripts\setup_powerbi_modeling_mcp.py
+python scripts\demo_dataset_mcp_smoke_test.py
+```
 
-- a client secret that you manage outside source control
-- Power BI tenant settings that allow service principals to use the REST APIs
-- possibly an allowed Entra security group, depending on tenant policy
-- workspace membership for the service principal
-- dataset-specific limitations, especially for `executeQueries` when RLS or SSO is enabled
+Typical MCP prompt:
 
-If you only need a presentation-friendly Fabric Trial demo, start with delegated auth.
+```text
+Open semantic model from PBIP folder '<repo-root>\pbip\demo_dataset.SemanticModel\definition'
+```
 
-## Screenshot Placeholders
+What the smoke test covers:
 
-Add your own screenshots later in these spots:
+- confirms the `DataRootFolder` Power Query parameter exists
+- rewrites CSV partitions to use that parameter
+- adds a small set of demo measures
+- exports the semantic model back to the PBIP TMDL folder
+- reopens the PBIP file in Power BI Desktop and validates the refreshed result
 
-> Screenshot placeholder: device code prompt and successful sign-in confirmation
-
-> Screenshot placeholder: workspace table in the delegated notebook
-
-> Screenshot placeholder: dataset / report list and DAX query output
-
-> Screenshot placeholder: service principal warning callout or admin settings page
+If you move the repo later, update `DataRootFolder` once instead of editing every table query.
 
 ## Documentation
 
-- [docs/setup_checklist.md](/C:/Point/2026/Speaker/PBIPxCopilot/powerbi_demo_PBIPxGHCopilot/docs/setup_checklist.md)
-- [docs/auth_decision_guide.md](/C:/Point/2026/Speaker/PBIPxCopilot/powerbi_demo_PBIPxGHCopilot/docs/auth_decision_guide.md)
-- [docs/pbip_sample_design.md](/C:/Point/2026/Speaker/PBIPxCopilot/powerbi_demo_PBIPxGHCopilot/docs/pbip_sample_design.md)
-- [docs/troubleshooting.md](/C:/Point/2026/Speaker/PBIPxCopilot/powerbi_demo_PBIPxGHCopilot/docs/troubleshooting.md)
+- [`docs/setup_checklist.md`](docs/setup_checklist.md)
+- [`docs/auth_decision_guide.md`](docs/auth_decision_guide.md)
+- [`docs/pbip_sample_design.md`](docs/pbip_sample_design.md)
+- [`docs/troubleshooting.md`](docs/troubleshooting.md)
+- [`docs/github_repo_showcase.md`](docs/github_repo_showcase.md)
+- [`docs/presenter_demo_script.md`](docs/presenter_demo_script.md)
 
-## Presenter Demo Script
+## Presenter Notes
 
-What to click:
+Recommended live order:
 
-1. Open the repo root in VS Code or Jupyter.
-2. Open [notebooks/01_delegated_auth_demo.ipynb](/C:/Point/2026/Speaker/PBIPxCopilot/powerbi_demo_PBIPxGHCopilot/notebooks/01_delegated_auth_demo.ipynb).
-3. Run cells from top to bottom.
-4. If needed, open [notebooks/02_service_principal_demo.ipynb](/C:/Point/2026/Speaker/PBIPxCopilot/powerbi_demo_PBIPxGHCopilot/notebooks/02_service_principal_demo.ipynb) to explain the automation path and its caveats.
+1. Open `README.md` and the repo tree.
+2. Run the delegated notebook.
+3. Show workspace, dataset, report, and DAX query results.
+4. Explain why delegated auth is the safest live-demo default.
+5. Open the service principal notebook only for caveats and automation framing.
+6. Finish with the PBIP semantic model and MCP workflow.
 
-What to run:
+Keep these caveats explicit:
 
-1. Load configuration
-2. Acquire token
-3. List workspaces
-4. List datasets
-5. List reports
-6. Execute a tiny DAX query
-
-What to say:
-
-- "This notebook shows the same Power BI REST API pattern under two identities."
-- "Delegated auth reflects the signed-in user and is the simplest path for a trial demo."
-- "Service principal auth is better for unattended automation, but it depends on admin settings."
-- "The data access result is shaped by workspace access, dataset permissions, and tenant policy."
-
-What caveats to mention:
-
-- tenant admin settings cannot be fixed in code
-- service principal access may still be blocked even when the app registration exists
-- `executeQueries` has identity caveats, especially with RLS and SSO
-- a Fabric Trial workspace does not automatically remove all Power BI licensing requirements
-
-## Validation Notes
-
-The code is ready to run locally after you:
-
-1. fill in `.env`
-2. complete the admin and workspace prerequisites
-3. confirm the target dataset supports the endpoints you want to show
+- tenant admin settings cannot be fixed in code during the session
+- service principal access depends on tenant policy and workspace membership
+- `executeQueries` may fail for service principal auth on RLS or SSO-enabled datasets
+- a Fabric Trial workspace does not remove every Power BI licensing dependency

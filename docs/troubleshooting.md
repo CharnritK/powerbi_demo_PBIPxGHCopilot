@@ -20,6 +20,8 @@ MSAL returns an `AADSTS...` error during sign-in.
 3. If using browser auth, confirm `REDIRECT_URI` matches the app registration.
 4. If using device code flow, switch `USE_DEVICE_CODE=true`.
 
+If you are using the legacy all-in-one notebook, the same values may also appear under `PBI_*` aliases. The repo now treats the canonical `.env` names as the source of truth.
+
 ## Missing Admin Consent
 
 ### Symptom

@@ -12,7 +12,9 @@ LOGGER = logging.getLogger(__name__)
 
 def get_service_principal_token(config: AppConfig) -> Dict:
     if not config.client_secret:
-        raise ValueError("PBI_CLIENT_SECRET is required for service principal authentication.")
+        raise ValueError(
+            "CLIENT_SECRET is required for service principal authentication. The legacy PBI_CLIENT_SECRET alias is still supported."
+        )
 
     authority = f"https://login.microsoftonline.com/{config.tenant_id}"
     app = msal.ConfidentialClientApplication(
@@ -21,7 +23,7 @@ def get_service_principal_token(config: AppConfig) -> Dict:
         authority=authority,
     )
 
-    result = app.acquire_token_for_client(scopes=[config.scope])
+    result = app.acquire_token_for_client(scopes=[config.service_principal_scope])
 
     if "access_token" not in result:
         error = result.get("error_description", result)

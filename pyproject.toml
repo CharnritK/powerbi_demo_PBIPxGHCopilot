@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "powerbi-demo-pbipxghcopilot"
+version = "0.1.0"
+description = "Notebook-first Power BI REST API and local PBIP modeling demo"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "msal>=1.31.0",
+    "pandas>=2.2.0",
+    "python-dotenv>=1.0.1",
+    "requests>=2.32.0",
+]
+
+[project.optional-dependencies]
+notebooks = [
+    "ipykernel>=6.29.0",
+    "matplotlib>=3.9.0",
+    "notebook>=7.0.0",
+]
+dev = [
+    "ipykernel>=6.29.0",
+    "matplotlib>=3.9.0",
+    "notebook>=7.0.0",
+    "pytest>=8.3.0",
+]
+
+[tool.setuptools]
+package-dir = {"" = "."}
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src", "src.*"]

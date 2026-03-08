@@ -43,14 +43,14 @@ def execute_dax_query(
     impersonated_user_name: str | None = None,
 ) -> pd.DataFrame:
     config = load_config()
-    selected_mode = auth_mode or config.auth_mode
+    selected_mode = _normalize_auth_mode(auth_mode or config.auth_mode)
 
     if selected_mode == "service_principal":
         token = get_service_principal_token(config)["access_token"]
-    elif selected_mode == "delegated_user":
+    elif selected_mode == "delegated":
         token = get_delegated_user_token(config)["access_token"]
     else:
-        raise ValueError("auth_mode must be 'service_principal' or 'delegated_user'.")
+        raise ValueError("auth_mode must be 'service_principal', 'delegated', or legacy 'delegated_user'.")
 
     client = PowerBIClient(token, timeout_seconds=config.timeout_seconds)
 
@@ -68,11 +68,15 @@ def execute_dax_query(
     return _extract_first_table(response)
 
 
+def _normalize_auth_mode(value: str) -> str:
+    return "delegated" if value == "delegated_user" else value
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Execute a DAX query against a Power BI dataset.")
     parser.add_argument("--workspace-id", required=True)
     parser.add_argument("--dataset-id", required=True)
-    parser.add_argument("--auth-mode", choices=["service_principal", "delegated_user"], default=None)
+    parser.add_argument("--auth-mode", choices=["service_principal", "delegated", "delegated_user"], default=None)
     parser.add_argument("--query-file", default=None)
     parser.add_argument("--impersonated-user-name", default=None)
     args = parser.parse_args()

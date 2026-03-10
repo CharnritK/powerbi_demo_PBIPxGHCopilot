@@ -1,76 +1,87 @@
 # GitHub Repo Showcase Walkthrough
 
-## What the repo should communicate
+## What the Repo Should Communicate
 
-The repo should feel like a practical consulting accelerator:
+The repo should feel like a practical enterprise BI engineering demo:
 
-- speaker-friendly notebooks at the front
-- reusable Python code underneath
-- a small explainable dataset
-- PBIP assets that support a source-control and MCP story
-- presenter notes that reduce live-demo risk
+- notebook-first for a presenter-friendly live path
+- source-controlled Power BI artifacts, not just screenshots or binaries
+- validation guardrails before deployment
+- lightweight Python tooling that is small enough to explain live
+- AI-assisted development as a way to extend the toolbox, not replace trusted tools
+- honest scope: semantic model and deployment validation, not full UI regression testing
 
-## Which files matter during the demo
+## Which Files Matter During the Demo
 
-### For the presenter
+### For Narrative and Session Framing
 
+- `docs/session_messaging.md`
 - `README.md`
+- `docs/presenter_demo_script.md`
+
+### For the Live Demo Path
+
 - `notebooks/01_delegated_auth_demo.ipynb`
 - `notebooks/02_service_principal_demo.ipynb`
+- `docs/auth_decision_guide.md`
+- `docs/setup_checklist.md`
+
+### For the Engineering Story
+
 - `docs/pbip_sample_design.md`
 - `docs/architecture_flows.md`
-
-### For developers
-
+- `pbip/`
 - `src/`
 - `scripts/`
-- `.env.example`
-- `pyproject.toml`
 
-### For Power BI developers
+## Suggested Walk-Through Order
 
-- `docs/pbip_sample_design.md`
-- `data/*.csv`
-- `pbip/README.md`
+1. Start at `docs/session_messaging.md` or summarize it verbally.
+2. Open `README.md`.
+3. Show the repo tree.
+4. Open the delegated notebook.
+5. Run workspace, dataset, and report listing.
+6. Run a small DAX query.
+7. Explain why delegated auth is the trusted live default.
+8. Contrast with the service principal notebook only if needed.
+9. Open the PBIP design doc.
+10. Open the architecture flow doc.
+11. Close on validation guardrails and AI-assisted tooling.
 
-## Suggested walk-through order
+## Key Talking Points While Browsing the Repo
 
-1. Start at `README.md`.
-2. Show the repo tree.
-3. Open the delegated notebook.
-4. Run workspace, dataset, and report listing.
-5. Run a DAX query.
-6. Contrast with the service principal notebook only if needed.
-7. Open the PBIP design doc.
-8. Close with architecture and auth trade-offs.
+- Start with the production-trust question, not with AI novelty.
+- Point out that PBIP, PBIR, and TMDL turn BI assets into inspectable artifacts.
+- Explain that PBIR matters because tools can inspect report structure and draft realistic validation scenarios.
+- Show that notebooks are the teaching surface, while `src/` and `scripts/` are the reusable engineering layer.
+- Mention that DAX Studio, ALM Toolkit, and Tabular Editor still matter; this repo shows how AI-assisted development can extend that toolbox.
+- Keep the focus on semantic model and deployment validation rather than page-level UI testing claims.
 
-## Audience-specific focus
+## Audience-Specific Focus
 
-### Business audience
-
-Focus on:
-
-- what problem this solves
-- why notebook-first is easier to trust
-- what is and is not supported
-- why auth choice matters for governance
-
-### Developer audience
+### Developer Audience
 
 Focus on:
 
 - reusable auth modules in `src/`
 - environment-driven config
-- clear API boundaries
-- graceful error handling
-- easy extension paths
+- small CLI entrypoints that can grow into internal tooling
+- validation and documentation opportunities around metadata and REST APIs
 
-### Power BI audience
+### Power BI Audience
 
 Focus on:
 
 - semantic model design
 - PBIP source control
-- DAX query mapping
-- RLS implications
-- workspace and dataset permissions
+- PBIR as a structured report artifact
+- RLS implications and auth trade-offs
+- why validation should happen before deployment
+
+### Mixed Audience
+
+Focus on:
+
+- why trust matters more than raw build speed
+- why the delegated notebook is the safest live path
+- how AI lowers the barrier to build practical internal tools without overclaiming magic

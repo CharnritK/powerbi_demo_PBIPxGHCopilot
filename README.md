@@ -1,10 +1,21 @@
-# Power BI REST API and PBIP Modeling Demo
+# Enterprise BI Engineering: Building Trustworthy Power BI with PBIP/PBIR, GitHub Copilot & AI
 
-This repo is tuned for a live speaker session. It combines:
+This repo is tuned for a live speaker session and practical technical demos. The core question is not "Can we build it?" It is "Can we trust it in production?"
 
-- a notebook-first Power BI REST API demo
-- a local PBIP semantic model for Power BI Modeling MCP demos
-- lightweight Python entrypoints that presenters can explain without extra setup noise
+The repo frames Power BI as an engineering discipline by combining:
+
+- a notebook-first, delegated-auth-first demo path for reliable live delivery
+- PBIP, PBIR, and TMDL assets that are source-controlled, reviewable, and diffable
+- a local semantic model sample that supports validation, report-structure inspection, and MCP demos
+- lightweight Python entrypoints that show how BI developers can build practical tooling around REST APIs, documentation, and validation workflows
+
+This is a developer-oriented session repo. It focuses on trustworthy enterprise BI delivery, validation guardrails, and AI-assisted tooling. It does not position AI as a replacement for reviewer judgment, and it does not claim full report-page UI regression testing.
+
+## Core Story
+
+- Version Control: Treat BI assets as source-controlled artifacts. PBIP, PBIR, and TMDL make semantic model and report changes easier to inspect and review.
+- Guardrails: Validate before deployment. Schema checks, measure checks, deployment validation, and early risk detection matter more than raw build speed.
+- Custom Toolbox: DAX Studio, ALM Toolkit, and Tabular Editor remain valuable. AI-assisted development extends that toolbox by making lightweight automations around Power BI REST APIs and metadata inspection more accessible.
 
 The primary presentation path is delegated auth first, then an optional service principal comparison.
 
@@ -12,13 +23,22 @@ The primary presentation path is delegated auth first, then an optional service 
 
 Start here for the lowest-friction live demo:
 
-1. Read [`docs/setup_checklist.md`](docs/setup_checklist.md).
-2. Fill in a local `.env` from [`.env.example`](.env.example).
-3. Run [`notebooks/01_delegated_auth_demo.ipynb`](notebooks/01_delegated_auth_demo.ipynb).
-4. Use [`notebooks/02_service_principal_demo.ipynb`](notebooks/02_service_principal_demo.ipynb) only if you want to show the automation identity path.
-5. Use the PBIP sample under [`pbip/`](pbip/README.md) for the local semantic model segment.
+1. Read [`docs/session_messaging.md`](docs/session_messaging.md).
+2. Read [`docs/setup_checklist.md`](docs/setup_checklist.md).
+3. Fill in a local `.env` from [`.env.example`](.env.example).
+4. Run [`notebooks/01_delegated_auth_demo.ipynb`](notebooks/01_delegated_auth_demo.ipynb).
+5. Use [`notebooks/02_service_principal_demo.ipynb`](notebooks/02_service_principal_demo.ipynb) only if you want to show the automation identity path.
+6. Use the PBIP sample under [`pbip/`](pbip/README.md) for the semantic model, source-control, and validation segment.
 
 Older all-in-one notebook and `scripts/` helpers are still present for workshop variations. They now read the same canonical `.env` values as the split notebook flow.
+
+## What the Demo Shows
+
+- delegated auth as the safest presenter default and the cleanest path for user-context validation
+- service principal auth as the optional automation comparison, with its tenant and dataset caveats kept explicit
+- REST API metadata calls and a small DAX query as practical building blocks, not the whole story
+- PBIP/PBIR/TMDL artifacts as structured inputs that tooling and reviewers can inspect
+- AI-assisted tooling ideas such as drafting validation scenarios from metadata, improving documentation, and helping BI developers build small internal utilities
 
 ## Repo Layout
 
@@ -124,6 +144,12 @@ python -m src.demos.list_datasets --group-id <workspace-id> --auth-mode service_
 
 The repo already includes a local PBIP sample at `pbip/demo_dataset.pbip`.
 
+This sample anchors the source-control and trustworthy-delivery part of the story:
+
+- PBIP/PBIR/TMDL make semantic model and report artifacts inspectable
+- lightweight MCP operations show how model changes can be scripted and reviewed
+- the sample model is small enough for a live demo, but realistic enough for measure checks, risk discussion, and deployment-validation framing
+
 ```powershell
 python scripts\setup_powerbi_modeling_mcp.py
 python scripts\demo_dataset_mcp_smoke_test.py
@@ -147,8 +173,10 @@ If you move the repo later, update `DataRootFolder` once instead of editing ever
 
 ## Documentation
 
+- [`docs/session_messaging.md`](docs/session_messaging.md)
 - [`docs/setup_checklist.md`](docs/setup_checklist.md)
 - [`docs/auth_decision_guide.md`](docs/auth_decision_guide.md)
+- [`docs/architecture_flows.md`](docs/architecture_flows.md)
 - [`docs/pbip_sample_design.md`](docs/pbip_sample_design.md)
 - [`docs/troubleshooting.md`](docs/troubleshooting.md)
 - [`docs/github_repo_showcase.md`](docs/github_repo_showcase.md)
@@ -158,12 +186,12 @@ If you move the repo later, update `DataRootFolder` once instead of editing ever
 
 Recommended live order:
 
-1. Open `README.md` and the repo tree.
+1. Open `README.md` and state the trust-in-production framing.
 2. Run the delegated notebook.
 3. Show workspace, dataset, report, and DAX query results.
 4. Explain why delegated auth is the safest live-demo default.
 5. Open the service principal notebook only for caveats and automation framing.
-6. Finish with the PBIP semantic model and MCP workflow.
+6. Finish with the PBIP semantic model, structured artifacts, and AI-assisted tooling story.
 
 Keep these caveats explicit:
 

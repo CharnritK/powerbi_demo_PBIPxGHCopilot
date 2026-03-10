@@ -1,97 +1,91 @@
 # Architecture and Flow Content
 
-## High-level architecture
+## High-Level Engineering Narrative
 
-**Notebook / Python script**
-→ **MSAL authentication**
-→ **Microsoft Entra token**
-→ **Power BI REST API**
-→ **Workspace / Dataset metadata**
-→ **DAX query execution**
-→ **Tabular results returned to notebook or terminal**
+Git-tracked PBIP/PBIR/TMDL artifacts
+-> AI-assisted inspection of report and model metadata
+-> lightweight validation or documentation scripts
+-> delegated or service principal authentication
+-> Power BI REST API and semantic model
+-> evidence returned to notebook or CLI
+-> higher confidence before deployment
 
-## Service principal request flow
+## Demo-Sized Architecture
 
-1. Notebook or script loads tenant, client ID, and client secret.
-2. MSAL confidential client acquires an app token.
-3. Power BI validates tenant settings and workspace membership.
-4. Script calls:
-   - `GET /groups`
-   - `GET /groups/{workspaceId}/datasets`
-   - `POST /groups/{workspaceId}/datasets/{datasetId}/executeQueries`
-5. Results return to the notebook or terminal.
-6. Because this is app-only context, it is best suited to automation and controlled service access.
+- Source-controlled artifacts: `pbip/demo_dataset.pbip`, `demo_dataset.Report/`, and `demo_dataset.SemanticModel/definition`
+- Presenter surfaces: `README.md`, notebook demos, and speaker docs
+- Reusable tooling layer: `src/` and compatibility `scripts/`
+- Validation and analysis tasks: inspect report structure, draft realistic validation scenarios, validate schema and measures, improve documentation, and run small metadata or DAX checks
+- Service boundary: Power BI REST API plus the target semantic model
+- Trusted-tool context: DAX Studio, ALM Toolkit, and Tabular Editor remain valuable; the repo shows where AI-assisted tooling can sit beside them
 
-## Delegated user request flow
+## Delegated User Request Flow
 
 1. Notebook or script loads tenant and client ID.
 2. User signs in through device code or interactive browser flow.
-3. MSAL public client acquires a user-delegated token.
-4. Power BI evaluates the signed-in user's permissions.
-5. Script calls the same API sequence:
-   - `GET /groups`
-   - `GET /groups/{workspaceId}/datasets`
-   - `POST /groups/{workspaceId}/datasets/{datasetId}/executeQueries`
-6. Results reflect the user's accessible context.
+3. MSAL public client acquires a delegated access token.
+4. Power BI evaluates the signed-in user's workspace and dataset permissions.
+5. The demo calls metadata endpoints and optionally `executeQueries`.
+6. Results reflect real user context, which makes this the safest live-demo baseline.
 
-## Behind-the-scenes engine flow
+## Service Principal Request Flow
 
-**Notebook UI layer**
-- Buttons/cells for: choose auth, list workspaces, list datasets, run DAX
+1. Notebook or script loads tenant, client ID, and client secret.
+2. MSAL confidential client acquires an app-only token.
+3. Power BI validates tenant settings, allowed groups, and workspace membership.
+4. The demo calls the same metadata endpoints where supported.
+5. `executeQueries` is only attempted when the dataset does not hit unsupported RLS or SSO identity limitations.
+6. This path is best framed as the automation comparison, not the default demo path.
 
-**Reusable script layer**
-- `config_loader.py`
-- `auth_service_principal.py`
-- `auth_delegated_user.py`
-- `list_workspaces.py`
-- `list_datasets.py`
-- `execute_dax_query.py`
+## Why PBIR Matters in This Story
 
-**Power BI service boundary**
-- REST API for metadata and DAX query execution
+- PBIR stores report structure in files that tools can inspect.
+- That makes it practical to inspect report structure and draft realistic validation scenarios from report metadata.
+- PBIR helps reviewers and tooling see what visuals, pages, and fields are in scope.
+- PBIR does not turn this repo into a full UI regression platform, and the docs should not claim that.
 
-**Semantic model boundary**
-- Power BI semantic model receives DAX query
-- Returns one result table to the caller
+## AI-Assisted Tooling Loop
 
-## Diagram text block for slides
+1. Inspect PBIR and TMDL artifacts from source control.
+2. Propose realistic validation scenarios from report and model metadata.
+3. Draft documentation, risk notes, or small validation scripts.
+4. Run targeted REST API calls or semantic model checks.
+5. Produce evidence that a reviewer can understand before deployment.
 
-### Diagram 1 — high-level
-User / Presenter  
-→ Notebook Demo  
-→ Python Helper Scripts  
-→ Microsoft Entra Authentication  
-→ Power BI REST API  
-→ Workspace + Semantic Model  
-→ DAX Results
+## Diagram Text Blocks for Slides
 
-### Diagram 2 — service principal
-Notebook  
-→ MSAL Confidential Client  
-→ Entra Token (App Identity)  
-→ Power BI REST API  
-→ Workspace Access (Service Principal)  
-→ Dataset  
-→ Execute DAX Query  
-→ Results
+### Diagram 1 - Trust Pipeline
 
-### Diagram 3 — delegated user
-Notebook  
-→ MSAL Public Client  
-→ User Sign-In  
-→ Entra Token (User Identity)  
-→ Power BI REST API  
-→ Workspace Access (User Context)  
-→ Dataset  
-→ Execute DAX Query  
-→ Results
+Git-tracked PBIP/PBIR/TMDL
+-> AI-assisted inspection
+-> validation scripts
+-> REST API / semantic model
+-> evidence for review
 
-### Diagram 4 — behind the scenes
-Notebook cell click  
-→ `list_workspaces.py`  
-→ `list_datasets.py`  
-→ `execute_dax_query.py`  
-→ Power BI REST API  
-→ Semantic model  
-→ Table result  
-→ Display as DataFrame / chart
+### Diagram 2 - Delegated Live Path
+
+Presenter
+-> delegated notebook
+-> MSAL public client
+-> user token
+-> Power BI REST API
+-> workspace + dataset
+-> results in notebook
+
+### Diagram 3 - Automation Comparison Path
+
+Notebook or script
+-> MSAL confidential client
+-> app token
+-> Power BI REST API
+-> workspace access for service principal
+-> metadata calls
+-> optional query checks on supported datasets
+
+### Diagram 4 - Metadata to Guardrail Flow
+
+PBIR report structure + TMDL semantic model
+-> inspect metadata
+-> draft validation scenarios
+-> run schema and measure checks
+-> produce deployment evidence

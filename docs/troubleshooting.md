@@ -1,5 +1,7 @@
 # Troubleshooting
 
+Use this guide to keep the demo credible. If something fails, start with identity, workspace access, dataset capability, and tenant settings before assuming the notebook or Python layer is wrong.
+
 ## AADSTS Errors
 
 ### Symptom

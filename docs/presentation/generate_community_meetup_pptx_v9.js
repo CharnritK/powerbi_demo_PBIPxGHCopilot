@@ -9,12 +9,24 @@ const {
 } = require('/home/oai/skills/slides/pptxgenjs_helpers');
 const path = require('path');
 
+const SESSION = {
+  title: 'Enterprise BI Engineering: Building Trustworthy Power BI with PBIP/PBIR, GitHub Copilot & AI',
+  titleLine1: 'Enterprise BI Engineering',
+  titleLine2: 'Building Trustworthy Power BI',
+  titleLine3: 'with PBIP/PBIR, GitHub Copilot & AI',
+  subtitle: 'Version Control, Validation Guardrails\nand AI-Assisted Tooling for Trustworthy Power BI',
+  focus: ['Trustworthy enterprise BI delivery', 'Developer-oriented practical demo'],
+  framingTitle: 'AI Makes BI Faster. Engineering Makes BI Trustworthy.',
+  framingSubtitle: 'Semantic model + deployment validation, not report-page UI regression testing',
+  framingHook: 'In enterprise BI, the hardest question is not "Can we build it?"\nWe already can.\nThe real question is "Can we trust it in production?"',
+};
+
 const pptx = new PptxGenJS();
 pptx.layout = 'LAYOUT_WIDE';
 pptx.author = 'OpenAI';
 pptx.company = 'OpenAI';
-pptx.subject = 'Enterprise BI Engineering with PBIP/PBIR & GitHub Copilot';
-pptx.title = 'Community Meetup Deck v9';
+pptx.subject = SESSION.title;
+pptx.title = SESSION.title;
 pptx.lang = 'en-US';
 pptx.theme = {
   headFontFace: 'Segoe UI',
@@ -210,16 +222,17 @@ slides.push(function(){
   s.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: W, h: 0.66, fill: { color: C.teal, transparency: 8 }, line: { color: C.teal, transparency: 100 } });
   s.addText('Power Platform Bootcamp Thailand', { x: 0, y: 0.16, w: W, h: 0.28, align: 'center', margin: 0, fontFace: 'Segoe UI', fontSize: 20, color: C.white, bold: true });
   s.addShape(pptx.ShapeType.roundRect, { x: 0.64, y: 1.1, w: 6.6, h: 4.9, rectRadius: 0.06, fill: { color: C.bg, transparency: 10 }, line: { color: 'FFFFFF', transparency: 88 } });
-  s.addText('Enterprise BI Engineering', { x: 0.9, y: 1.45, w: 5.9, h: 0.55, fontFace: 'Segoe UI', fontSize: 31, color: C.white, bold: true, margin: 0 });
-  s.addText('with PBIP/PBIR & GitHub Copilot', { x: 0.9, y: 2.05, w: 5.9, h: 0.45, fontFace: 'Segoe UI', fontSize: 22, color: 'D7FBF6', bold: true, margin: 0 });
-  s.addShape(pptx.ShapeType.rect, { x: 0.9, y: 2.72, w: 2.6, h: 0.04, fill: { color: C.coral }, line: { color: C.coral } });
-  s.addText('Foundation for Agentic BI Delivery\nVersion Control, Validation Gates, and AI-Assisted Engineering', {
-    x: 0.9, y: 2.95, w: 5.9, h: 0.72, fontFace: 'Segoe UI', fontSize: 15, color: C.white, margin: 0, breakLine: false
+  s.addText(SESSION.titleLine1, { x: 0.9, y: 1.42, w: 5.95, h: 0.5, fontFace: 'Segoe UI', fontSize: 30, color: C.white, bold: true, margin: 0 });
+  s.addText(SESSION.titleLine2, { x: 0.9, y: 1.96, w: 5.95, h: 0.42, fontFace: 'Segoe UI', fontSize: 23, color: 'D7FBF6', bold: true, margin: 0, fit: 'shrink' });
+  s.addText(SESSION.titleLine3, { x: 0.9, y: 2.34, w: 5.95, h: 0.34, fontFace: 'Segoe UI', fontSize: 16.5, color: 'D7FBF6', bold: true, margin: 0, fit: 'shrink' });
+  s.addShape(pptx.ShapeType.rect, { x: 0.9, y: 2.78, w: 2.6, h: 0.04, fill: { color: C.coral }, line: { color: C.coral } });
+  s.addText(SESSION.subtitle, {
+    x: 0.9, y: 3.0, w: 5.95, h: 0.72, fontFace: 'Segoe UI', fontSize: 15, color: C.white, margin: 0, breakLine: false, fit: 'shrink'
   });
   s.addText('Charnrit Khongthanarat\nVis & Interaction Science Consultant, Accenture\nMarch 14, 2026 · AreaX, 4th Fl., Siam Paragon\nlinkedin.com/in/charnrit-khongthanarat', {
     x: 0.9, y: 4.25, w: 5.6, h: 1.2, fontFace: 'Segoe UI', fontSize: 12.5, color: 'EAF3F7', margin: 0, breakLine: false, fit: 'shrink'
   });
-  addInfoCard(s, 8.95, 5.55, 3.55, 0.72, 'Session focus', ['Enterprise trust, not only speed', 'Public-safe examples only'], true, C.coral);
+  addInfoCard(s, 8.95, 5.55, 3.55, 0.72, 'Session focus', SESSION.focus, true, C.coral);
   addFooter(s, 1);
   s.addNotes(notesWithSources(
 `สวัสดีครับ ขอบคุณทุกคนที่ยังอยู่ในเซสชันสุดท้ายของวันนี้นะครับ
@@ -232,9 +245,9 @@ slides.push(function(){
 
 // Slide 2
 slides.push(function(){
-  const s = pptx.addSlide(); addBg(s, false); addHeader(s, 'AI Makes BI Faster. Engineering Makes BI Trustworthy.', 'Semantic model + deployment validation — not report-page UI regression testing', false); addFooter(s,2);
-  s.addText('In enterprise BI, the hardest question is not “Can we build it?”\nIt is “Can we trust it in production?”', {
-    x: 0.7, y: 1.45, w: 6.0, h: 1.0, fontFace: 'Segoe UI', fontSize: 24, bold: true, color: C.text, margin: 0, fit: 'shrink'
+  const s = pptx.addSlide(); addBg(s, false); addHeader(s, SESSION.framingTitle, SESSION.framingSubtitle, false); addFooter(s,2);
+  s.addText(SESSION.framingHook, {
+    x: 0.7, y: 1.45, w: 6.0, h: 1.15, fontFace: 'Segoe UI', fontSize: 22.5, bold: true, color: C.text, margin: 0, fit: 'shrink'
   });
   addInfoCard(s, 0.75, 2.75, 5.9, 2.55, 'What goes wrong without engineering controls', [
     'KPI drift reaches decision-makers before anyone notices',

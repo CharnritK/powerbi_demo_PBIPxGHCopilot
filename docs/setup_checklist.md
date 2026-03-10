@@ -2,6 +2,8 @@
 
 This checklist covers the manual portal tasks that code cannot solve for you.
 
+In this repo, those tasks matter because trustworthy demos and trustworthy automation both depend on a known-good identity, workspace, and dataset setup before any notebook starts.
+
 Use delegated auth as the default path for a simple Fabric Trial demo. Use service principal auth only if you specifically want to show an automation-oriented identity model.
 
 ## A) Manual Azure / Entra Setup
@@ -75,6 +77,8 @@ Canonical docs and samples use these names. Legacy `PBI_*` aliases are still acc
 1. Delegated notebook with device code flow
 2. Delegated notebook with browser flow, only if you have configured localhost redirect
 3. Optional service principal notebook
+
+Start with the path that best reflects real user-context access. Only move to service principal after the environment is already proven and the automation comparison is worth showing.
 
 ## Microsoft Guidance Used
 

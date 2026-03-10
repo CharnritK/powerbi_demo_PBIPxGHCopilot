@@ -1,4 +1,4 @@
-# Enterprise BI Engineering with PBIP/PBIR & GitHub Copilot
+# Enterprise BI Engineering: Building Trustworthy Power BI with PBIP/PBIR, GitHub Copilot & AI
 
 **30-Minute Closing Session — Power Platform Bootcamp Thailand (Final Content / v7)**
 
@@ -13,9 +13,9 @@
 
 ## Slide 1 — Title
 
-**Enterprise BI Engineering with PBIP/PBIR & GitHub Copilot**
+**Enterprise BI Engineering: Building Trustworthy Power BI with PBIP/PBIR, GitHub Copilot & AI**
 
-Subtitle: Foundation for Agentic BI Delivery — Version Control, Validation Gates, and AI-Assisted Engineering
+Subtitle: Version Control, Validation Guardrails, and AI-Assisted Tooling for Trustworthy Power BI
 
 Event: Power Platform Bootcamp Thailand  
 Speaker: Charnrit Khongthanarat · Vis & Interaction Science Consultant, Accenture  
@@ -644,4 +644,3 @@ Suggested answer:
 - For RLS-sensitive datasets, use delegated user context for validation personas.
 - Treat persona-based validation as part of the design, not as an afterthought.
 - Keep the deck focused on the control model; move auth specifics into Q&A unless the audience asks.
-

@@ -1,0 +1,19 @@
+environment: dev
+
+runtime:
+  auth_mode: delegated
+  log_level: INFO
+
+auth:
+  tenant_id: tenant-from-yaml
+  client_id: client-from-yaml
+  client_secret: secret-from-yaml
+  redirect_uri: http://localhost
+  use_device_code: true
+  token_cache_path: .local/test_token_cache.bin
+
+powerbi:
+  workspace_id: workspace-from-yaml
+  dataset_id: dataset-from-yaml
+  dax_query: 'EVALUATE ROW("Check", 1)'
+  request_timeout_seconds: 45

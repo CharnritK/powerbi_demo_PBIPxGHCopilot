@@ -8,8 +8,13 @@ import re
 import subprocess
 import time
 from pathlib import Path
+import sys
 
-from powerbi_modeling_mcp_common import (
+repo_root_path = Path(__file__).resolve().parent.parent
+if str(repo_root_path) not in sys.path:
+    sys.path.insert(0, str(repo_root_path))
+
+from scripts.powerbi_modeling_mcp_common import (
     close_power_bi_desktop_window,
     MCPError,
     PowerBIModelingMCPClient,
@@ -395,9 +400,31 @@ def main() -> None:
     args = parser.parse_args()
 
     root = repo_root()
-    definition_folder = root / "pbip" / "demo_dataset.SemanticModel" / "definition"
-    pbip_file = root / "pbip" / "demo_dataset.pbip"
-    data_root = root / "data"
+    definition_folder = (
+        root
+        / "powerbi"
+        / "workspaces"
+        / "regional-sales-trust-demo"
+        / "pbip"
+        / "demo_dataset.SemanticModel"
+        / "definition"
+    )
+    pbip_file = (
+        root
+        / "powerbi"
+        / "workspaces"
+        / "regional-sales-trust-demo"
+        / "pbip"
+        / "demo_dataset.pbip"
+    )
+    data_root = (
+        root
+        / "powerbi"
+        / "workspaces"
+        / "regional-sales-trust-demo"
+        / "assets"
+        / "data"
+    )
     server_path = discover_server_binary()
 
     close_power_bi_desktop_window("demo_dataset")

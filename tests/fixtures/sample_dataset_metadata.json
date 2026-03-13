@@ -1,0 +1,21 @@
+{
+  "workspace_id": "workspace-123",
+  "datasets": [
+    {
+      "id": "dataset-1",
+      "name": "Sales Model",
+      "configuredBy": "owner@example.com",
+      "isRefreshable": true,
+      "targetStorageMode": "Abf"
+    }
+  ],
+  "reports": [
+    {
+      "id": "report-1",
+      "name": "Regional Sales",
+      "datasetId": "dataset-1",
+      "webUrl": "https://app.powerbi.com/groups/workspace/reports/report-1",
+      "embedUrl": "https://app.powerbi.com/reportEmbed?reportId=report-1"
+    }
+  ]
+}

@@ -1,38 +1,19 @@
 from __future__ import annotations
 
 import argparse
-import json
+from pathlib import Path
+import sys
+
 import pandas as pd
 
-from auth_delegated_user import get_delegated_user_token
-from auth_service_principal import get_service_principal_token
-from config_loader import load_config
-from powerbi_client import PowerBIClient
+repo_root = Path(__file__).resolve().parent.parent
+if str(repo_root) not in sys.path:
+    sys.path.insert(0, str(repo_root))
 
-
-DEFAULT_QUERY = """EVALUATE
-TOPN(
-    10,
-    SUMMARIZECOLUMNS(
-        'Dim Region'[Region],
-        "Total Sales", [Total Sales],
-        "Gross Margin", [Gross Margin]
-    ),
-    [Total Sales], DESC
-)"""
-
-
-def _extract_first_table(response: dict) -> pd.DataFrame:
-    results = response.get("results", [])
-    if not results:
-        return pd.DataFrame()
-
-    tables = results[0].get("tables", [])
-    if not tables:
-        return pd.DataFrame()
-
-    rows = tables[0].get("rows", [])
-    return pd.DataFrame(rows)
+from src.auth import get_access_token
+from src.config.loader import load_config, validate_auth_mode
+from src.powerbi.client import PowerBIClient
+from src.powerbi.execute_queries import DEFAULT_QUERY, execute_dax_query as _execute_dax_query
 
 
 def execute_dax_query(
@@ -43,33 +24,17 @@ def execute_dax_query(
     impersonated_user_name: str | None = None,
 ) -> pd.DataFrame:
     config = load_config()
-    selected_mode = _normalize_auth_mode(auth_mode or config.auth_mode)
-
-    if selected_mode == "service_principal":
-        token = get_service_principal_token(config)["access_token"]
-    elif selected_mode == "delegated":
-        token = get_delegated_user_token(config)["access_token"]
-    else:
-        raise ValueError("auth_mode must be 'service_principal', 'delegated', or legacy 'delegated_user'.")
-
+    selected_mode = validate_auth_mode(auth_mode or config.auth_mode)
+    token = get_access_token(config, auth_mode=selected_mode, use_device_code=config.use_device_code)
     client = PowerBIClient(token, timeout_seconds=config.timeout_seconds)
-
-    payload = {
-        "queries": [{"query": dax_query}],
-        "serializerSettings": {"includeNulls": True},
-    }
-    if impersonated_user_name:
-        payload["impersonatedUserName"] = impersonated_user_name
-
-    response = client.post(
-        f"/groups/{workspace_id}/datasets/{dataset_id}/executeQueries",
-        payload=payload,
+    rows = _execute_dax_query(
+        client=client,
+        group_id=workspace_id,
+        dataset_id=dataset_id,
+        dax_query=dax_query,
+        impersonated_user_name=impersonated_user_name,
     )
-    return _extract_first_table(response)
-
-
-def _normalize_auth_mode(value: str) -> str:
-    return "delegated" if value == "delegated_user" else value
+    return pd.DataFrame(rows)
 
 
 if __name__ == "__main__":
@@ -81,12 +46,7 @@ if __name__ == "__main__":
     parser.add_argument("--impersonated-user-name", default=None)
     args = parser.parse_args()
 
-    if args.query_file:
-        with open(args.query_file, "r", encoding="utf-8") as handle:
-            dax_query = handle.read()
-    else:
-        dax_query = DEFAULT_QUERY
-
+    dax_query = Path(args.query_file).read_text(encoding="utf-8") if args.query_file else DEFAULT_QUERY
     df = execute_dax_query(
         workspace_id=args.workspace_id,
         dataset_id=args.dataset_id,
@@ -94,7 +54,4 @@ if __name__ == "__main__":
         auth_mode=args.auth_mode,
         impersonated_user_name=args.impersonated_user_name,
     )
-    if df.empty:
-        print("No rows returned.")
-    else:
-        print(df.to_string(index=False))
+    print(df.to_string(index=False) if not df.empty else "No rows returned.")

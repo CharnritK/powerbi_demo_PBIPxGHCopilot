@@ -1,0 +1,7 @@
+environment: dev
+
+runtime:
+  auth_mode: delegated
+
+powerbi:
+  request_timeout_seconds: 60

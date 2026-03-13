@@ -1,37 +1,30 @@
 from __future__ import annotations
 
 import argparse
+from pathlib import Path
+import sys
+
 import pandas as pd
 
-from auth_delegated_user import get_delegated_user_token
-from auth_service_principal import get_service_principal_token
-from config_loader import load_config
-from powerbi_client import PowerBIClient
+repo_root = Path(__file__).resolve().parent.parent
+if str(repo_root) not in sys.path:
+    sys.path.insert(0, str(repo_root))
+
+from src.auth import get_access_token
+from src.config.loader import load_config, validate_auth_mode
+from src.powerbi.client import PowerBIClient
+from src.powerbi.datasets import list_datasets as _list_datasets
 
 
 def list_datasets(workspace_id: str, auth_mode: str | None = None) -> pd.DataFrame:
     config = load_config()
-    selected_mode = _normalize_auth_mode(auth_mode or config.auth_mode)
-
-    if selected_mode == "service_principal":
-        token = get_service_principal_token(config)["access_token"]
-    elif selected_mode == "delegated":
-        token = get_delegated_user_token(config)["access_token"]
-    else:
-        raise ValueError("auth_mode must be 'service_principal', 'delegated', or legacy 'delegated_user'.")
-
+    selected_mode = validate_auth_mode(auth_mode or config.auth_mode)
+    token = get_access_token(config, auth_mode=selected_mode, use_device_code=config.use_device_code)
     client = PowerBIClient(token, timeout_seconds=config.timeout_seconds)
-    response = client.get(f"/groups/{workspace_id}/datasets")
-    rows = response.get("value", [])
-    frame = pd.DataFrame(rows)
+    frame = pd.DataFrame(_list_datasets(client, workspace_id))
     if frame.empty:
         return pd.DataFrame(columns=["id", "name", "configuredBy", "isRefreshable", "targetStorageMode"])
-    keep = [c for c in ["id", "name", "configuredBy", "isRefreshable", "targetStorageMode"] if c in frame.columns]
-    return frame[keep].sort_values("name").reset_index(drop=True)
-
-
-def _normalize_auth_mode(value: str) -> str:
-    return "delegated" if value == "delegated_user" else value
+    return frame
 
 
 if __name__ == "__main__":

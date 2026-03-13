@@ -3,8 +3,13 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
+import sys
 
-from powerbi_modeling_mcp_common import (
+repo_root_path = Path(__file__).resolve().parent.parent
+if str(repo_root_path) not in sys.path:
+    sys.path.insert(0, str(repo_root_path))
+
+from scripts.powerbi_modeling_mcp_common import (
     MCPError,
     discover_server_binary,
     repo_root,
@@ -54,7 +59,15 @@ def main() -> None:
     parser.parse_args()
 
     server_path = discover_server_binary()
-    definition_folder = repo_root() / "pbip" / "demo_dataset.SemanticModel" / "definition"
+    definition_folder = (
+        repo_root()
+        / "powerbi"
+        / "workspaces"
+        / "regional-sales-trust-demo"
+        / "pbip"
+        / "demo_dataset.SemanticModel"
+        / "definition"
+    )
 
     run_command(["codex", "--version"])
     changed, registered = ensure_codex_registration(server_path)

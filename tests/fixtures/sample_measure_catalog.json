@@ -1,0 +1,10 @@
+[
+  {
+    "table": "Fact Sales",
+    "measure": "Total Sales"
+  },
+  {
+    "table": "Fact Sales",
+    "measure": "Gross Margin"
+  }
+]

@@ -2,8 +2,13 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+import sys
 
-from powerbi_modeling_mcp_common import (
+repo_root_path = Path(__file__).resolve().parent.parent
+if str(repo_root_path) not in sys.path:
+    sys.path.insert(0, str(repo_root_path))
+
+from scripts.powerbi_modeling_mcp_common import (
     close_power_bi_desktop_window,
     MCPError,
     PowerBIModelingMCPClient,
@@ -463,8 +468,23 @@ def export_model(client: PowerBIModelingMCPClient, definition_folder: Path) -> N
 
 
 def main() -> None:
-    definition_folder = repo_root() / "pbip" / "demo_dataset.SemanticModel" / "definition"
-    data_root = repo_root() / "data"
+    definition_folder = (
+        repo_root()
+        / "powerbi"
+        / "workspaces"
+        / "regional-sales-trust-demo"
+        / "pbip"
+        / "demo_dataset.SemanticModel"
+        / "definition"
+    )
+    data_root = (
+        repo_root()
+        / "powerbi"
+        / "workspaces"
+        / "regional-sales-trust-demo"
+        / "assets"
+        / "data"
+    )
     server_path = discover_server_binary()
 
     close_power_bi_desktop_window("demo_dataset")

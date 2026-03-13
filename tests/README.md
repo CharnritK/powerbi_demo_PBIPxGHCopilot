@@ -1,15 +1,17 @@
 # Tests
 
-This repo is demo-first, so automated coverage is still light.
+The test suite is intentionally lightweight and focused on unit-testable repository behavior.
 
-Useful local checks:
+Coverage focus:
 
-- `python -m compileall src scripts`
-- `python -m src.demos.list_workspaces --auth-mode delegated`
-- `python scripts\demo_dataset_mcp_smoke_test.py`
+- config loading and precedence
+- auth flow selection and error handling
+- Power BI client response handling
+- metadata normalization
+- semantic-model documentation and validation helpers
 
-Future improvements:
+Run:
 
-- unit tests for config loading and auth-mode normalization
-- mocked API tests for workspace, dataset, report, and DAX query calls
-- notebook smoke execution in CI
+```powershell
+python -m pytest -q
+```

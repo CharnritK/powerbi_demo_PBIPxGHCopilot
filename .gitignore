@@ -18,5 +18,11 @@ htmlcov/
 .python-version
 .DS_Store
 Thumbs.db
+config/*.yaml
+!config/*.example.yaml
+config/environments/*.yaml
+!config/environments/*.example.yaml
+config/connections/*.yaml
+!config/connections/*.example.yaml
 **/.pbi/localSettings.json
 **/.pbi/cache.abf

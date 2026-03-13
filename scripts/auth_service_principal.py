@@ -1,34 +1,10 @@
-from __future__ import annotations
+from pathlib import Path
+import sys
 
-import logging
-from typing import Dict
+repo_root = Path(__file__).resolve().parent.parent
+if str(repo_root) not in sys.path:
+    sys.path.insert(0, str(repo_root))
 
-import msal
+from src.auth.service_principal import get_service_principal_token
 
-from config_loader import AppConfig
-
-LOGGER = logging.getLogger(__name__)
-
-
-def get_service_principal_token(config: AppConfig) -> Dict:
-    if not config.client_secret:
-        raise ValueError(
-            "CLIENT_SECRET is required for service principal authentication. The legacy PBI_CLIENT_SECRET alias is still supported."
-        )
-
-    authority = f"https://login.microsoftonline.com/{config.tenant_id}"
-    app = msal.ConfidentialClientApplication(
-        client_id=config.client_id,
-        client_credential=config.client_secret,
-        authority=authority,
-    )
-
-    result = app.acquire_token_for_client(scopes=[config.service_principal_scope])
-
-    if "access_token" not in result:
-        error = result.get("error_description", result)
-        LOGGER.error("Failed to acquire service principal token: %s", error)
-        raise RuntimeError(f"Could not acquire service principal token: {error}")
-
-    LOGGER.info("Service principal token acquired successfully.")
-    return result
+__all__ = ["get_service_principal_token"]

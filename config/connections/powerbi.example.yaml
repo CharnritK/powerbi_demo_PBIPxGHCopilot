@@ -1,0 +1,6 @@
+powerbi:
+  tenant_id: "<tenant-guid>"
+  client_id: "<app-guid>"
+  workspace_id: "<workspace-guid>"
+  dataset_id: "<dataset-guid>"
+  service_principal_scope: "https://analysis.windows.net/powerbi/api/.default"

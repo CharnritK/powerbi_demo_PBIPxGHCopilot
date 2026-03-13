@@ -1,0 +1,21 @@
+environment: dev
+
+runtime:
+  auth_mode: delegated
+  log_level: INFO
+
+auth:
+  redirect_uri: http://localhost
+  use_device_code: true
+  token_cache_path: .local/msal_token_cache.bin
+
+powerbi:
+  workspace_id: "<workspace-guid>"
+  dataset_id: "<dataset-guid>"
+  dax_query: 'EVALUATE ROW("Demo", 1)'
+  request_timeout_seconds: 60
+
+paths:
+  pbip_root: powerbi/workspaces/regional-sales-trust-demo/pbip
+  semantic_model_definition_path: powerbi/workspaces/regional-sales-trust-demo/pbip/demo_dataset.SemanticModel/definition
+  sample_data_path: powerbi/workspaces/regional-sales-trust-demo/assets/data

@@ -64,6 +64,38 @@ The repo still includes:
 - lightweight tests under [`tests/`](./tests)
 - non-secret config templates under [`config/`](./config)
 
+## Presentation Demo Flow
+
+The current presentation package lives under [`docs/presentation/`](./docs/presentation/).
+
+Primary files:
+
+- [`docs/presentation/presentation_outline.md`](./docs/presentation/presentation_outline.md)
+- [`docs/presentation/demo_walkthrough.md`](./docs/presentation/demo_walkthrough.md)
+- [`docs/presentation/speaker_notes.md`](./docs/presentation/speaker_notes.md)
+- [`docs/presentation/repo_presentation_gap_analysis.md`](./docs/presentation/repo_presentation_gap_analysis.md)
+- [`docs/presentation/draft_slide_content.md`](./docs/presentation/draft_slide_content.md)
+
+For the current presenter environment, the canonical live-demo path uses **service principal** auth rather than delegated auth.
+
+Canonical live order:
+
+1. `README.md`
+2. top-level repo tree
+3. `docs/architecture/repo-architecture.md`
+4. `demo-enterprise/bi-repo/powerbi/workspaces/regional-sales-trust-demo/pbip/`
+5. `demo-enterprise/bi-repo/powerbi/workspaces/regional-sales-trust-demo/pbip/demo_dataset.SemanticModel/definition/tables/Fact Sales.tmdl`
+6. `demo-enterprise/bi-repo/powerbi/workspaces/regional-sales-trust-demo/pbip/demo_dataset.SemanticModel/definition/relationships.tmdl`
+7. `demo-enterprise/bi-repo/powerbi/workspaces/regional-sales-trust-demo/pbip/demo_dataset.Report/definition/pages/pages.json`
+8. `notebooks/02_service_principal_demo.ipynb`
+9. `notebooks/03_measure_validation_showcase.ipynb`
+10. `tests/measure-validation/templates/measure_validation_template.csv`
+11. `tests/measure-validation/generated/report_measure_coverage.csv`
+12. `test-results/demo-dataset/2026-03-14_001534/`
+
+Short limitation note:
+service principal is the practical working demo path for this session, but tenant settings, workspace membership, and dataset features such as RLS or SSO can still block `executeQueries`.
+
 ## Validation
 
 ```powershell

@@ -6,7 +6,7 @@ from pathlib import Path
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Print the notebook launch command for this repo.")
-    parser.add_argument("--notebook", default="notebooks/01_delegated_auth_demo.ipynb")
+    parser.add_argument("--notebook", default="notebooks/03_measure_validation_showcase.ipynb")
     args = parser.parse_args()
 
     notebook_path = Path(args.notebook)

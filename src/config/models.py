@@ -103,6 +103,10 @@ class RuntimeSettings:
         return self.powerbi.request_timeout_seconds
 
     @property
+    def environment_name(self) -> str:
+        return self.environment
+
+    @property
     def delegated_scopes(self) -> list[str]:
         return list(self.powerbi.delegated_scopes)
 

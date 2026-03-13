@@ -31,6 +31,7 @@ Key locations:
 - [`docs/architecture.md`](./docs/architecture.md): simple view of the demo architecture
 - [`docs/enterprise-setup.md`](./docs/enterprise-setup.md): explains why the repo is organized this way
 - [`docs/integration-overview.md`](./docs/integration-overview.md): describes the handoff between Data Engineering and BI
+- [`docs/measure-validation.md`](./docs/measure-validation.md): PBIP-aware measure validation template workflow
 
 ## Demo Story
 
@@ -59,6 +60,7 @@ The repo still includes:
 - reusable Python modules under [`src/`](./src)
 - CLI and helper scripts under [`scripts/`](./scripts)
 - demo notebooks under [`notebooks/`](./notebooks)
+- persisted notebook demo outputs under [`test-results/`](./test-results)
 - lightweight tests under [`tests/`](./tests)
 - non-secret config templates under [`config/`](./config)
 
@@ -68,4 +70,7 @@ The repo still includes:
 python -m compileall src scripts
 python -m pytest -q
 python scripts\cli\validate_tmdl_semantic_model.py
+python scripts\evaluate_pbip_for_testing.py
+python scripts\generate_measure_test_scenarios.py
+python scripts\generate_measure_validation_template.py
 ```

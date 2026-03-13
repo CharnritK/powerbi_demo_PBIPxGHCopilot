@@ -9,6 +9,7 @@ Coverage focus:
 - Power BI client response handling
 - metadata normalization
 - semantic-model documentation and validation helpers
+- measure validation template schema and PBIP-aware scenario generation
 
 Run:
 

@@ -1,0 +1,8 @@
+dataset_name,report_name,page_name,visual_name,visual_type,table_name,measure_name,usage_role,is_high_visibility,priority_hint
+demo_dataset,demo_dataset,Executive Overview,f965bb9fbe20448b0e05,cardVisual,Fact Sales,Total Sales,Data,true,high
+demo_dataset,demo_dataset,Executive Overview,f965bb9fbe20448b0e05,cardVisual,Fact Sales,Total Cost,Data,true,high
+demo_dataset,demo_dataset,Executive Overview,2797f9375247dd4787c3,lineChart,Fact Sales,Gross Margin,Y,true,high
+demo_dataset,,,,,Fact Sales,Gross Margin %,,false,low
+demo_dataset,demo_dataset,Executive Overview,f965bb9fbe20448b0e05,cardVisual,Fact Sales,Total Units,Data,true,high
+demo_dataset,demo_dataset,Executive Overview,f965bb9fbe20448b0e05,cardVisual,Fact Sales,Order Count,Data,true,high
+demo_dataset,demo_dataset,Executive Overview,f26d7a00b6c48e56e7ec,lineChart,Fact Sales,Average Order Value,Y,true,high

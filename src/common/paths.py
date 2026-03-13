@@ -28,5 +28,9 @@ def default_semantic_model_definition_path() -> Path:
     return default_pbip_root() / "demo_dataset.SemanticModel" / "definition"
 
 
+def default_report_definition_path() -> Path:
+    return default_pbip_root() / "demo_dataset.Report" / "definition"
+
+
 def default_sample_data_path() -> Path:
     return default_workspace_root() / "assets" / "data"

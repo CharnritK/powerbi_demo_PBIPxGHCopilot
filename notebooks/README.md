@@ -14,6 +14,7 @@ Canonical notebooks:
 
 - `01_delegated_auth_demo.ipynb`
 - `02_service_principal_demo.ipynb`
+- `03_measure_validation_showcase.ipynb`
 
 Legacy compatibility notebook:
 

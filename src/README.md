@@ -11,6 +11,7 @@ Module layout:
 - `fabric/`: optional Fabric-specific helpers
 - `mcp/`: Power BI Modeling MCP client and helpers
 - `semantic_model/`: TMDL validation and documentation helpers
+- `validation/`: PBIP-aware measure validation template, report inspection, and scenario generation helpers
 - `notebooksupport/`: notebook bootstrap helpers
 
 Compatibility layers remain in `src/utils/`, `src/clients/`, and `src/demos/` until older entrypoints are retired.

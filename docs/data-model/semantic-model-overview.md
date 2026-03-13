@@ -2,7 +2,7 @@
 
 Asset location:
 
-- `powerbi/workspaces/regional-sales-trust-demo/pbip/demo_dataset.SemanticModel/definition/`
+- `demo-enterprise/bi-repo/powerbi/workspaces/regional-sales-trust-demo/pbip/demo_dataset.SemanticModel/definition/`
 
 Model shape:
 

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import textwrap
 
 import pytest
 
@@ -32,6 +33,42 @@ def test_environment_overrides_yaml(monkeypatch: pytest.MonkeyPatch) -> None:
 
     assert settings.workspace_id == "workspace-from-env"
     assert settings.auth_mode == "service_principal"
+
+
+def test_load_settings_uses_config_dot_env_as_fallback(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    for key in ("TENANT_ID", "CLIENT_ID", "CLIENT_SECRET", "WORKSPACE_ID", "DATASET_ID", "AUTH_MODE"):
+        monkeypatch.delenv(key, raising=False)
+
+    repo_root = tmp_path / "repo"
+    config_dir = repo_root / "config"
+    env_dir = config_dir / "environments"
+    config_dir.mkdir(parents=True)
+    env_dir.mkdir()
+
+    (config_dir / ".env").write_text(
+        textwrap.dedent(
+            """
+            TENANT_ID=tenant-from-config-env
+            CLIENT_ID=client-from-config-env
+            WORKSPACE_ID=workspace-from-config-env
+            DATASET_ID=dataset-from-config-env
+            AUTH_MODE=delegated
+            """
+        ).strip()
+        + "\n",
+        encoding="utf-8",
+    )
+    (config_dir / "settings.yaml").write_text("{}\n", encoding="utf-8")
+    (env_dir / "dev.yaml").write_text("{}\n", encoding="utf-8")
+
+    monkeypatch.setattr("src.config.loader.get_repo_root", lambda: repo_root)
+
+    settings = load_settings()
+
+    assert settings.tenant_id == "tenant-from-config-env"
+    assert settings.client_id == "client-from-config-env"
+    assert settings.workspace_id == "workspace-from-config-env"
+    assert settings.dataset_id == "dataset-from-config-env"
 
 
 def test_validate_auth_mode_supports_legacy_alias() -> None:

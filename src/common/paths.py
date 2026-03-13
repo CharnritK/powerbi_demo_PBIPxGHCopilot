@@ -12,8 +12,12 @@ def get_repo_root() -> Path:
     return Path(__file__).resolve().parents[2]
 
 
+def default_bi_repo_root() -> Path:
+    return get_repo_root() / "demo-enterprise" / "bi-repo"
+
+
 def default_workspace_root() -> Path:
-    return get_repo_root() / "powerbi" / "workspaces" / SOLUTION_NAME
+    return default_bi_repo_root() / "powerbi" / "workspaces" / SOLUTION_NAME
 
 
 def default_pbip_root() -> Path:

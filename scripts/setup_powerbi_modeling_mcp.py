@@ -12,9 +12,9 @@ if str(repo_root_path) not in sys.path:
 from scripts.powerbi_modeling_mcp_common import (
     MCPError,
     discover_server_binary,
-    repo_root,
     run_command,
 )
+from src.common.paths import default_semantic_model_definition_path
 
 
 def exact_prompt(definition_folder: Path) -> str:
@@ -59,15 +59,7 @@ def main() -> None:
     parser.parse_args()
 
     server_path = discover_server_binary()
-    definition_folder = (
-        repo_root()
-        / "powerbi"
-        / "workspaces"
-        / "regional-sales-trust-demo"
-        / "pbip"
-        / "demo_dataset.SemanticModel"
-        / "definition"
-    )
+    definition_folder = default_semantic_model_definition_path()
 
     run_command(["codex", "--version"])
     changed, registered = ensure_codex_registration(server_path)

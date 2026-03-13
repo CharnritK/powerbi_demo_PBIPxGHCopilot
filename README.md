@@ -1,142 +1,71 @@
-# Enterprise BI Engineering Repository
+# Enterprise Demo Repository
 
-This repository is a working Power BI and analytics engineering workspace. It is designed for BI developers, analytics engineers, solution architects, and AI coding agents who need source-controlled Power BI assets, reusable Python utilities, notebook-friendly execution, and practical documentation.
+This repository is a presentation-friendly demo that shows how BI and Data Engineering work would usually be split across separate repositories in an enterprise environment.
 
-The business theme remains the same as the original demo: trustworthy Power BI delivery. The repo now treats that theme as an engineering operating model rather than a speaker-first package.
+For demo purposes only, everything stays in one repo under [`demo-enterprise/`](./demo-enterprise):
 
-## What This Repo Owns
+- [`demo-enterprise/bi-repo/`](./demo-enterprise/bi-repo): BI developer responsibilities, including the Power BI project, semantic model, report shell, and BI-facing docs
+- [`demo-enterprise/data-engineer-repo/`](./demo-enterprise/data-engineer-repo): a lightweight mock Data Engineering repo with notebooks, SQL, jobs, config, and placeholder transformation code
+- [`demo-enterprise/shared/`](./demo-enterprise/shared): simple contracts and integration notes between the two areas
 
-- Reusable Python modules for auth, Power BI REST access, semantic-model inspection, MCP helpers, and notebook bootstrap
-- A source-controlled PBIP sample and local semantic model under [`powerbi/`](./powerbi)
-- Demo and operator notebooks under [`notebooks/`](./notebooks)
-- Enterprise-oriented documentation under [`docs/`](./docs)
-- Lightweight unit tests under [`tests/`](./tests)
-- Non-secret config templates under [`config/`](./config)
-
-## What This Repo Does Not Own
-
-- CI/CD pipelines or deployment automation
-- Lakehouse, warehouse, or ingestion pipelines
-- Report publishing processes across environments
-- Enterprise identity secrets in source control
+The existing Python utilities, notebooks, config templates, and tests remain in this repo because they support the live demo and local validation.
 
 ## Repository Layout
 
 ```text
 .
 |-- config/
+|-- demo-enterprise/
 |-- docs/
 |-- notebooks/
-|-- powerbi/
 |-- references/
 |-- scripts/
 |-- src/
 `-- tests/
 ```
 
-Key source-of-truth locations:
+Key locations:
 
-- [`src/`](./src): reusable Python code
-- [`powerbi/workspaces/regional-sales-trust-demo/pbip/`](./powerbi/workspaces/regional-sales-trust-demo/pbip): Power BI project assets
-- [`docs/data-model/`](./docs/data-model): semantic model documentation
-- [`docs/external-repos/`](./docs/external-repos): boundaries with upstream and downstream repos
-- [`config/`](./config): example configuration contracts
+- [`demo-enterprise/bi-repo/powerbi/workspaces/regional-sales-trust-demo/pbip/`](./demo-enterprise/bi-repo/powerbi/workspaces/regional-sales-trust-demo/pbip): committed PBIP, PBIR, and TMDL files
+- [`demo-enterprise/data-engineer-repo/`](./demo-enterprise/data-engineer-repo): mock upstream engineering structure for storytelling
+- [`docs/architecture.md`](./docs/architecture.md): simple view of the demo architecture
+- [`docs/enterprise-setup.md`](./docs/enterprise-setup.md): explains why the repo is organized this way
+- [`docs/integration-overview.md`](./docs/integration-overview.md): describes the handoff between Data Engineering and BI
 
-## Quick Start
+## Demo Story
 
-```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-pip install -r requirements.txt
-Copy-Item .env.example .env
-python -m notebook notebooks\01_delegated_auth_demo.ipynb
-```
+In a real enterprise setup:
 
-Development extras:
+1. Data Engineering prepares curated tables or views.
+2. BI developers consume those curated assets in a semantic model.
+3. Reports, measures, and presentation logic are owned by the BI side.
 
-```powershell
-pip install -r requirements-dev.txt
-python -m pytest -q
-```
+This repository simulates that split without introducing actual multi-repo complexity, CI/CD, or working data pipelines.
 
-## Configuration and Auth
+## Power BI Demo Assets
 
-Use `.env.example` as the canonical secret template. Non-secret defaults and naming rules live in [`config/`](./config).
+The Power BI sample now lives under [`demo-enterprise/bi-repo/powerbi/workspaces/regional-sales-trust-demo/`](./demo-enterprise/bi-repo/powerbi/workspaces/regional-sales-trust-demo).
 
-Primary environment variables:
+- `pbip/`: native Power BI project files
+- `assets/data/`: committed CSV sample data used by the local semantic model
+- `README.md`: guidance for opening and validating the demo model
 
-- `TENANT_ID`
-- `CLIENT_ID`
-- `CLIENT_SECRET`
-- `WORKSPACE_ID`
-- `DATASET_ID`
-- `AUTH_MODE`
-- `REDIRECT_URI`
-- `USE_DEVICE_CODE`
-- `TOKEN_CACHE_PATH`
-- `REQUEST_TIMEOUT_SECONDS`
+If you open the PBIP on a different machine, update the semantic model `DataRootFolder` parameter to your local absolute path for `demo-enterprise/bi-repo/powerbi/workspaces/regional-sales-trust-demo/assets/data`.
 
-Legacy `PBI_*` aliases are still supported for compatibility with the older workshop flow.
+## Supporting Code
 
-See [`docs/operations/local-setup.md`](./docs/operations/local-setup.md) and [`docs/operations/auth-prerequisites.md`](./docs/operations/auth-prerequisites.md).
+The repo still includes:
 
-## Running the Repo
-
-Canonical CLI entrypoints:
-
-- `python scripts/cli/check_auth.py`
-- `python scripts/cli/list_workspaces.py --auth-mode delegated`
-- `python scripts/cli/list_datasets.py --group-id <workspace-id>`
-- `python scripts/cli/list_reports.py --group-id <workspace-id>`
-- `python scripts/cli/execute_dax_query.py --group-id <workspace-id> --dataset-id <dataset-id>`
-- `python scripts/cli/export_metadata.py --group-id <workspace-id>`
-- `python scripts/cli/generate_measure_docs.py`
-- `python scripts/cli/validate_tmdl_semantic_model.py`
-
-Compatibility wrappers remain under [`scripts/`](./scripts) and [`src/demos/`](./src/demos) so older demo paths still work.
-
-## Power BI Assets
-
-The Power BI sample lives under [`powerbi/workspaces/regional-sales-trust-demo/`](./powerbi/workspaces/regional-sales-trust-demo).
-
-- `pbip/`: native PBIP, PBIR, and TMDL files
-- `assets/data/`: committed sample CSVs used by the local semantic model
-- `README.md`: local asset contract and safe-edit guidance
-
-## Documentation
-
-Start with [`docs/README.md`](./docs/README.md).
-
-- Architecture: [`docs/architecture/`](./docs/architecture)
-- Conventions: [`docs/conventions/`](./docs/conventions)
-- Domain and KPIs: [`docs/domain/`](./docs/domain)
-- Data model: [`docs/data-model/`](./docs/data-model)
-- Operations: [`docs/operations/`](./docs/operations)
-- External repo boundaries: [`docs/external-repos/`](./docs/external-repos)
-- AI agent guidance: [`docs/ai/`](./docs/ai)
-- Presentation assets: [`docs/presentation/`](./docs/presentation)
-
-## Relationship to External Repositories
-
-This repo assumes upstream curated data products and downstream BI/report collaboration, but it does not duplicate those repositories here.
-
-- Data Engineering contract: [`docs/external-repos/data-engineering-repo-contract.md`](./docs/external-repos/data-engineering-repo-contract.md)
-- BI Developer contract: [`docs/external-repos/bi-developer-repo-contract.md`](./docs/external-repos/bi-developer-repo-contract.md)
+- reusable Python modules under [`src/`](./src)
+- CLI and helper scripts under [`scripts/`](./scripts)
+- demo notebooks under [`notebooks/`](./notebooks)
+- lightweight tests under [`tests/`](./tests)
+- non-secret config templates under [`config/`](./config)
 
 ## Validation
-
-Local validation currently focuses on:
-
-- config loading and auth setup
-- Power BI REST metadata calls
-- DAX query execution
-- TMDL semantic-model validation
-- PBIP/MCP local demo workflows
-
-Run:
 
 ```powershell
 python -m compileall src scripts
 python -m pytest -q
+python scripts\cli\validate_tmdl_semantic_model.py
 ```

@@ -15,28 +15,28 @@ The repo should feel like a practical enterprise BI engineering demo:
 
 ### For Narrative and Session Framing
 
-- `docs/session_messaging.md`
+- `docs/presentation/session_messaging.md`
 - `README.md`
-- `docs/presenter_demo_script.md`
+- `docs/presentation/presenter_demo_script.md`
 
 ### For the Live Demo Path
 
 - `notebooks/01_delegated_auth_demo.ipynb`
 - `notebooks/02_service_principal_demo.ipynb`
-- `docs/auth_decision_guide.md`
-- `docs/setup_checklist.md`
+- `docs/operations/auth-prerequisites.md`
+- `docs/operations/local-setup.md`
 
 ### For the Engineering Story
 
-- `docs/pbip_sample_design.md`
-- `docs/architecture_flows.md`
-- `pbip/`
+- `docs/data-model/semantic-model-overview.md`
+- `docs/architecture/integration-map.md`
+- `demo-enterprise/bi-repo/powerbi/workspaces/regional-sales-trust-demo/pbip/`
 - `src/`
 - `scripts/`
 
 ## Suggested Walk-Through Order
 
-1. Start at `docs/session_messaging.md` or summarize it verbally.
+1. Start at `docs/presentation/session_messaging.md` or summarize it verbally.
 2. Open `README.md`.
 3. Show the repo tree.
 4. Open the delegated notebook.
@@ -44,8 +44,8 @@ The repo should feel like a practical enterprise BI engineering demo:
 6. Run a small DAX query.
 7. Explain why delegated auth is the trusted live default.
 8. Contrast with the service principal notebook only if needed.
-9. Open the PBIP design doc.
-10. Open the architecture flow doc.
+9. Open `docs/data-model/semantic-model-overview.md`.
+10. Open `docs/architecture/integration-map.md`.
 11. Close on validation guardrails and AI-assisted tooling.
 
 ## Key Talking Points While Browsing the Repo

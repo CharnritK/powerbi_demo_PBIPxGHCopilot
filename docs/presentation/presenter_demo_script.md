@@ -49,7 +49,7 @@ What makes this exciting is that AI does not just help us build reports faster. 
 
 ## What-to-Click-Next Checklist
 
-1. Open `docs/session_messaging.md`.
+1. Open `docs/presentation/session_messaging.md`.
 2. Open `README.md`.
 3. Show the folder tree.
 4. Open `notebooks/01_delegated_auth_demo.ipynb`.
@@ -59,8 +59,8 @@ What makes this exciting is that AI does not just help us build reports faster. 
 8. Run the DAX query.
 9. Explain why that small query is a useful validation probe, not the whole testing story.
 10. Open `notebooks/02_service_principal_demo.ipynb` only if you want to cover automation caveats.
-11. Open `docs/pbip_sample_design.md`.
-12. Open `docs/architecture_flows.md`.
+11. Open `docs/data-model/semantic-model-overview.md`.
+12. Open `docs/architecture/integration-map.md`.
 13. Close on validation guardrails and AI-assisted custom tooling.
 
 ## Possible Audience Q&A

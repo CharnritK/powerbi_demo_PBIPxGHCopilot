@@ -6,8 +6,8 @@ Fast navigation:
 
 - reusable code: `src/`
 - notebooks: `notebooks/`
-- Power BI assets: `powerbi/workspaces/regional-sales-trust-demo/pbip/`
-- sample data: `powerbi/workspaces/regional-sales-trust-demo/assets/data/`
+- Power BI assets: `demo-enterprise/bi-repo/powerbi/workspaces/regional-sales-trust-demo/pbip/`
+- sample data: `demo-enterprise/bi-repo/powerbi/workspaces/regional-sales-trust-demo/assets/data/`
 - business rules and model docs: `docs/domain/` and `docs/data-model/`
 - external boundaries: `docs/external-repos/`
 
@@ -28,6 +28,6 @@ Edit-with-caution areas:
 Source-of-truth folders:
 
 - `src/`
-- `powerbi/workspaces/regional-sales-trust-demo/pbip/`
+- `demo-enterprise/bi-repo/powerbi/workspaces/regional-sales-trust-demo/pbip/`
 - `docs/data-model/`
 - `docs/external-repos/`

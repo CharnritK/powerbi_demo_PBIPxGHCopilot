@@ -1,0 +1,4 @@
+/// Local root folder for the demo_dataset CSV files.
+expression DataRootFolder = "C:\Point\2026\Speaker\PBIPxCopilot\powerbi_demo_PBIPxGHCopilot\demo-enterprise\bi-repo\powerbi\workspaces\regional-sales-trust-demo\assets\data" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 89aa3f2c-32a7-483d-a1bb-2da0ff4afe1c
+

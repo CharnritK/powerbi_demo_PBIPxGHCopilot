@@ -16,6 +16,6 @@ powerbi:
   request_timeout_seconds: 60
 
 paths:
-  pbip_root: powerbi/workspaces/regional-sales-trust-demo/pbip
-  semantic_model_definition_path: powerbi/workspaces/regional-sales-trust-demo/pbip/demo_dataset.SemanticModel/definition
-  sample_data_path: powerbi/workspaces/regional-sales-trust-demo/assets/data
+  pbip_root: demo-enterprise/bi-repo/powerbi/workspaces/regional-sales-trust-demo/pbip
+  semantic_model_definition_path: demo-enterprise/bi-repo/powerbi/workspaces/regional-sales-trust-demo/pbip/demo_dataset.SemanticModel/definition
+  sample_data_path: demo-enterprise/bi-repo/powerbi/workspaces/regional-sales-trust-demo/assets/data

@@ -87,7 +87,7 @@ def load_settings(
         ),
         paths=PathSettings(
             repo_root=repo_root,
-            powerbi_root=repo_root / "powerbi",
+            powerbi_root=repo_root / "demo-enterprise" / "bi-repo" / "powerbi",
             workspace_root=default_workspace_root(),
             pbip_root=Path(_resolve_value("PBIP_ROOT", base_settings, env_settings) or str(default_pbip_root())),
             semantic_model_definition_path=Path(
@@ -135,10 +135,10 @@ def _load_environment(repo_root: Path, env_path: Path | str | None) -> None:
     if env_path:
         load_dotenv(dotenv_path=env_path, override=False)
         return
-    candidate = repo_root / ".env"
-    if candidate.exists():
-        load_dotenv(dotenv_path=candidate, override=False)
-        return
+    for candidate in (repo_root / ".env", repo_root / "config" / ".env"):
+        if candidate.exists():
+            load_dotenv(dotenv_path=candidate, override=False)
+            return
     load_dotenv(override=False)
 
 

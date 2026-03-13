@@ -2,8 +2,8 @@
 
 Major moves:
 
-- `pbip/` -> `powerbi/workspaces/regional-sales-trust-demo/pbip/`
-- `data/` -> `powerbi/workspaces/regional-sales-trust-demo/assets/data/`
+- `pbip/` -> `demo-enterprise/bi-repo/powerbi/workspaces/regional-sales-trust-demo/pbip/`
+- `data/` -> `demo-enterprise/bi-repo/powerbi/workspaces/regional-sales-trust-demo/assets/data/`
 - presentation and speaker docs -> `docs/presentation/`
 - legacy root notebook removed; legacy all-in-one notebook retained as `notebooks/90_legacy_powerbi_rest_api_demo.ipynb`
 

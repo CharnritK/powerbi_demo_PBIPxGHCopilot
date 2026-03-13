@@ -1,0 +1,8 @@
+job_name: daily_gold_refresh
+description: Mock daily refresh job for curated BI-facing tables.
+schedule: "0 4 * * *"
+tasks:
+  - name: transform_silver
+    notebook: notebooks/02_transform_silver.py
+  - name: publish_gold
+    notebook: notebooks/03_publish_gold.py

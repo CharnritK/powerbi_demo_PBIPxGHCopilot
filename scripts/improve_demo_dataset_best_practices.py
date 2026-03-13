@@ -14,8 +14,8 @@ from scripts.powerbi_modeling_mcp_common import (
     PowerBIModelingMCPClient,
     discover_server_binary,
     parse_json_text_content,
-    repo_root,
 )
+from src.common.paths import default_sample_data_path, default_semantic_model_definition_path
 
 
 TABLE_RENAMES = {
@@ -468,23 +468,8 @@ def export_model(client: PowerBIModelingMCPClient, definition_folder: Path) -> N
 
 
 def main() -> None:
-    definition_folder = (
-        repo_root()
-        / "powerbi"
-        / "workspaces"
-        / "regional-sales-trust-demo"
-        / "pbip"
-        / "demo_dataset.SemanticModel"
-        / "definition"
-    )
-    data_root = (
-        repo_root()
-        / "powerbi"
-        / "workspaces"
-        / "regional-sales-trust-demo"
-        / "assets"
-        / "data"
-    )
+    definition_folder = default_semantic_model_definition_path()
+    data_root = default_sample_data_path()
     server_path = discover_server_binary()
 
     close_power_bi_desktop_window("demo_dataset")

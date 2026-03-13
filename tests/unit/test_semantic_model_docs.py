@@ -9,7 +9,17 @@ from src.semantic_model.validation import validate_tmdl_definition
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-DEFINITION = REPO_ROOT / "powerbi" / "workspaces" / "regional-sales-trust-demo" / "pbip" / "demo_dataset.SemanticModel" / "definition"
+DEFINITION = (
+    REPO_ROOT
+    / "demo-enterprise"
+    / "bi-repo"
+    / "powerbi"
+    / "workspaces"
+    / "regional-sales-trust-demo"
+    / "pbip"
+    / "demo_dataset.SemanticModel"
+    / "definition"
+)
 FIXTURE = Path(__file__).resolve().parents[1] / "fixtures" / "sample_measure_catalog.json"
 
 

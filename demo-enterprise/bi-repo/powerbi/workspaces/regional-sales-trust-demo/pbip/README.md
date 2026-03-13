@@ -12,7 +12,9 @@ How it is meant to be used:
 
 - Open the semantic model through the local Power BI Modeling MCP server by targeting `demo_dataset.SemanticModel/definition`.
 - Open `demo_dataset.pbip` in Power BI Desktop when you want to refresh and validate the local model.
-- Keep the `DataRootFolder` parameter pointed at `../assets/data` through the repo's configured absolute path.
+- After cloning, set `DataRootFolder` to the absolute path of `demo-enterprise/bi-repo/powerbi/workspaces/regional-sales-trust-demo/assets/data` on your machine.
+- Update `DataRootFolder` in Power BI Desktop or through the documented local MCP workflow before refresh if the committed value still points at a different machine.
+- Re-run the TMDL validator after any structural semantic-model edit. The validator does not rewrite machine-specific paths for you.
 
 Useful commands:
 

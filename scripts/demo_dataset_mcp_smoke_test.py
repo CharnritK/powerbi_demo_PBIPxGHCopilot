@@ -23,9 +23,9 @@ from scripts.powerbi_modeling_mcp_common import (
     find_power_bi_desktop_exe,
     normalize_windows_slashes,
     parse_json_text_content,
-    repo_root,
     run_command,
 )
+from src.common.paths import default_pbip_root, default_sample_data_path, default_semantic_model_definition_path
 
 
 TABLE_NAMES = [
@@ -399,32 +399,9 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    root = repo_root()
-    definition_folder = (
-        root
-        / "powerbi"
-        / "workspaces"
-        / "regional-sales-trust-demo"
-        / "pbip"
-        / "demo_dataset.SemanticModel"
-        / "definition"
-    )
-    pbip_file = (
-        root
-        / "powerbi"
-        / "workspaces"
-        / "regional-sales-trust-demo"
-        / "pbip"
-        / "demo_dataset.pbip"
-    )
-    data_root = (
-        root
-        / "powerbi"
-        / "workspaces"
-        / "regional-sales-trust-demo"
-        / "assets"
-        / "data"
-    )
+    definition_folder = default_semantic_model_definition_path()
+    pbip_file = default_pbip_root() / "demo_dataset.pbip"
+    data_root = default_sample_data_path()
     server_path = discover_server_binary()
 
     close_power_bi_desktop_window("demo_dataset")

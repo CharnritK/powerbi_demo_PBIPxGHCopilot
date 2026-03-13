@@ -1,0 +1,6 @@
+environment: dev
+storage_account: example-storage
+bronze_path: /mnt/demo/bronze
+silver_path: /mnt/demo/silver
+gold_path: /mnt/demo/gold
+serving_schema: gold

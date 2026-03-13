@@ -5,7 +5,7 @@ This repo separates reusable code, runnable surfaces, Power BI assets, and docum
 Source-of-truth folders:
 
 - `src/`: reusable Python
-- `powerbi/workspaces/regional-sales-trust-demo/pbip/`: Power BI project assets
+- `demo-enterprise/bi-repo/powerbi/workspaces/regional-sales-trust-demo/pbip/`: Power BI project assets
 - `config/`: example configuration contracts
 - `docs/data-model/`: semantic model rules and assumptions
 - `docs/external-repos/`: ownership boundaries with other repos
@@ -25,4 +25,4 @@ Editing model:
 
 - Put business logic in `src/`.
 - Keep CLI argument parsing and notebook display code out of `src/`.
-- Keep Power BI artifacts under `powerbi/`, never under `src/`.
+- Keep Power BI artifacts under `demo-enterprise/bi-repo/powerbi/`, never under `src/`.

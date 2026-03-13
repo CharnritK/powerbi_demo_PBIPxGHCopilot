@@ -14,6 +14,7 @@ Dataset query issues:
 
 PBIP issues:
 
-- Confirm `DataRootFolder` points to `powerbi/workspaces/regional-sales-trust-demo/assets/data`.
+- Confirm `DataRootFolder` points to `demo-enterprise/bi-repo/powerbi/workspaces/regional-sales-trust-demo/assets/data`.
+- If the sample was cloned to a different machine, replace the committed absolute `DataRootFolder` value with your own local absolute path before refreshing the PBIP.
 - Re-run `python scripts/cli/validate_tmdl_semantic_model.py` after TMDL edits.
 - If MCP operations fail, confirm the Power BI Modeling MCP extension is installed and current.

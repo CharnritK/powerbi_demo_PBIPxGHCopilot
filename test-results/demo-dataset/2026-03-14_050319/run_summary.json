@@ -1,0 +1,62 @@
+{
+  "workspace": {
+    "id": "3155f514-76c4-4eea-9684-4a5b240c88ee",
+    "name": "Demo_Powerplatform_2026_Prod",
+    "type": "Workspace",
+    "isReadOnly": false,
+    "isOnDedicatedCapacity": true
+  },
+  "dataset": {
+    "id": "76fbbb23-6d54-4c81-9bc4-6b7b8faed659",
+    "name": "demo_dataset",
+    "configuredBy": "Charnrit@bcscdev.onmicrosoft.com",
+    "isRefreshable": true,
+    "targetStorageMode": "Abf"
+  },
+  "template_path": "C:\\Point\\2026\\Speaker\\PBIPxCopilot\\powerbi_demo_PBIPxGHCopilot\\tests\\measure-validation\\templates\\measure_validation_template.csv",
+  "template_source": "template",
+  "selected_case_count": 5,
+  "executed_case_count": 5,
+  "execution_outcomes": [
+    {
+      "test_id": "mv_70ee614a35",
+      "measure_name": "Average Order Value",
+      "scenario_type": "divide_by_zero",
+      "row_count": 1,
+      "outcome": "needs_review",
+      "error": ""
+    },
+    {
+      "test_id": "mv_28072a574a",
+      "measure_name": "Average Order Value",
+      "scenario_type": "grand_total_behavior",
+      "row_count": 1,
+      "outcome": "needs_review",
+      "error": ""
+    },
+    {
+      "test_id": "mv_3cb6832517",
+      "measure_name": "Average Order Value",
+      "scenario_type": "happy_path",
+      "row_count": 1,
+      "outcome": "needs_review",
+      "error": ""
+    },
+    {
+      "test_id": "mv_edd3350c89",
+      "measure_name": "Average Order Value",
+      "scenario_type": "regression",
+      "row_count": 1,
+      "outcome": "needs_review",
+      "error": ""
+    },
+    {
+      "test_id": "mv_5837eb1bfc",
+      "measure_name": "Gross Margin",
+      "scenario_type": "grand_total_behavior",
+      "row_count": 1,
+      "outcome": "needs_review",
+      "error": ""
+    }
+  ]
+}

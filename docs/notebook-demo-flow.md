@@ -53,6 +53,14 @@ python -m notebook notebooks/03_measure_validation_showcase.ipynb
 
 Then run the notebook top-to-bottom and adjust the selection variables if you want a narrower demo.
 
+For a non-interactive validation pass that exercises the full notebook:
+
+```powershell
+python -m jupyter nbconvert --to notebook --execute notebooks/03_measure_validation_showcase.ipynb --output 03_measure_validation_showcase.executed.ipynb --output-dir tmp/jupyter-notebook
+```
+
+If authentication fails, the notebook now renders a presenter-friendly error message before stopping instead of exposing garbled fallback text.
+
 ## Known limitations
 
 - the notebook is intentionally linear and does not provide a full UI

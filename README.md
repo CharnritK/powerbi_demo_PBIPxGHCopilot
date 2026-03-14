@@ -101,6 +101,7 @@ service principal is the practical working demo path for this session, but tenan
 ```powershell
 python -m compileall src scripts
 python -m pytest -q
+python -m jupyter nbconvert --to notebook --execute notebooks/03_measure_validation_showcase.ipynb --output 03_measure_validation_showcase.executed.ipynb --output-dir tmp/jupyter-notebook
 python scripts\cli\validate_tmdl_semantic_model.py
 python scripts\evaluate_pbip_for_testing.py
 python scripts\generate_measure_test_scenarios.py

@@ -1,8 +1,10 @@
 # AGENT.md
 
+> **What is this file?** AGENT.md provides guardrails for AI coding assistants (GitHub Copilot, Claude, etc.) working in this repository. It sets expectations around security, governance, and safe automation — a practical example of how to guide AI tools in a BI engineering context.
+
 ## Purpose
 
-This repository supports enterprise Business Intelligence and Power BI / Fabric engineering work.
+This repository supports Business Intelligence and Power BI / Fabric engineering work.
 
 Agents working in this repository must optimize for:
 
@@ -206,11 +208,8 @@ When making material changes, update the relevant docs:
 
 - `README.md` for repo-level changes
 - `docs/architecture/*` for structural changes
-- `docs/conventions/*` for standards changes
-- `docs/domain/*` for business meaning
 - `docs/data-model/*` for semantic model changes
-- `docs/external-repos/*` for integration boundary changes
-- `docs/ai/*` for agent-facing workflow guidance
+- `docs/operations/*` for setup and auth guidance
 
 ### Documentation quality standard
 Documentation must be:

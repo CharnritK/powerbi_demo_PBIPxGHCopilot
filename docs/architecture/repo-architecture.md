@@ -8,18 +8,12 @@ Source-of-truth folders:
 - `demo-enterprise/bi-repo/powerbi/workspaces/regional-sales-trust-demo/pbip/`: Power BI project assets
 - `config/`: example configuration contracts
 - `docs/data-model/`: semantic model rules and assumptions
-- `docs/external-repos/`: ownership boundaries with other repos
 
 Execution surfaces:
 
 - `scripts/cli/`: canonical CLI entrypoints
 - `notebooks/`: guided execution and demo notebooks
-- `scripts/*.py` and `src/demos/*`: compatibility shims for older flows
-
-Reference-only folders:
-
-- `docs/presentation/`
-- `references/`
+- `scripts/*.py`: evaluation and generation scripts
 
 Editing model:
 

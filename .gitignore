@@ -26,3 +26,5 @@ config/connections/*.yaml
 !config/connections/*.example.yaml
 **/.pbi/localSettings.json
 **/.pbi/cache.abf
+test-results/demo-dataset/
+tmp/
